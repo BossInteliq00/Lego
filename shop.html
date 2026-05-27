@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ROBO LEGO SHOP</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="icon" href="C:\Users\user\Documents\robolegoeducation\image\icon.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{ margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; scroll-behavior: smooth; }
+body{ background:#020617; color:white; overflow-x:hidden; }
+.glass{ background:rgba(255,255,255,0.08); backdrop-filter:blur(14px); border:1px solid rgba(255,255,255,0.1); }
+.card{ transition:0.4s; }
+.card:hover{ transform:translateY(-10px) scale(1.02); }
+.gradient{ background:linear-gradient(to right,#facc15,#38bdf8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.chat-box{ height:300px; overflow-y:auto; }
+#cartModal, #cityAlertModal { display: none; }
+</style>
+</head>
+<body class="relative">
+
+<div id="cityAlertModal" class="fixed inset-0 bg-black/90 z-[60] flex items-center justify-center p-6">
+    <div class="glass rounded-[40px] p-10 w-full max-w-2xl text-center border-yellow-400 border-2">
+        <div class="text-6xl mb-6">📍</div>
+        <h2 class="text-4xl font-black mb-6 text-yellow-400">НАЗАР АУДАРЫҢЫЗ!</h2>
+        <p class="text-2xl mb-4 font-bold">ӘЗІРГЕ ТАПСЫРЫС БЕРУ ТЕК <span class="text-blue-400">АТЫРАУ ҚАЛАСЫНДА</span> ІСКЕ АСЫРЫЛАДЫ.</p>
+        <p class="text-xl text-slate-300 mb-10">Тағы да сұраныс болса, болашақта бүкіл Қазақстанды қамтимыз!</p>
+        <button onclick="closeCityAlert()" class="bg-yellow-400 text-black px-10 py-4 rounded-2xl font-black text-2xl w-full hover:bg-yellow-300">
+            Түсіндім, жалғастыру
+        </button>
+    </div>
+</div>
+
+<nav class="fixed top-0 left-0 w-full z-50 px-6 py-4">
+    <div class="glass max-w-7xl mx-auto rounded-3xl px-8 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+            <div class="w-14 h-14 bg-yellow-400 rounded-2xl flex items-center justify-center text-black text-3xl">🤖</div>
+            <h1 class="text-3xl md:text-4xl font-black gradient hidden md:block">ROBO LEGO</h1>
+        </div>
+        <div class="flex gap-4 items-center">
+            <button onclick="openCart()" class="relative flex items-center gap-2 bg-slate-800 px-4 py-3 rounded-2xl font-bold hover:bg-slate-700">
+                🛒 Себет <span id="cartCount" class="bg-yellow-400 text-black px-2 py-1 rounded-full text-xs">0</span>
+            </button>
+            <button id="authBtn" onclick="openLogin()" class="bg-blue-500 px-6 py-3 rounded-2xl font-bold hover:bg-blue-400">Тіркелу / Кіру</button>
+        </div>
+    </div>
+</nav>
+
+<section class="pt-40 pb-20 px-6">
+    <div class="max-w-7xl mx-auto text-center">
+        <h1 class="text-5xl md:text-7xl font-black gradient">РОБОТОТЕХНИКА ДҮКЕНІ</h1>
+        <p class="text-xl md:text-2xl text-slate-300 mt-8">LEGO WeDo және болашақ инженерлерге арналған наборлар</p>
+    </div>
+</section>
+
+<section class="pb-28 px-6">
+    <div class="max-w-7xl mx-auto">
+        <h2 class="text-4xl md:text-5xl font-black mb-10">Тауарлар</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="glass rounded-[30px] overflow-hidden card flex flex-col">
+                <img src="https://www.lego.com/cdn/cs/set/assets/blt706e02efdd6fd911/45300.jpg?fit=bounds&format=jpg&quality=80&width=1500&height=1500&dpr=1" class="w-full h-72 object-cover">
+                <div class="p-8 flex-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-3xl font-black">LEGO WeDo 2.0</h3>
+                        <p class="text-slate-300 mt-4 text-sm">ID: PROD-001. Барлық программасы толық комплектісі.(арнайы үйірме ашқысы келген жанға)</p>
+                        <div class="text-4xl font-black text-yellow-400 mt-6">120 000 ₸</div>
+                    </div>
+                    <button onclick="addToCart('PROD-001', 'LEGO WeDo 2.0', 120000)" class="mt-6 w-full bg-yellow-400 text-black py-4 rounded-2xl font-black text-xl hover:bg-yellow-300">Себетке қосу</button>
+                </div>
+            </div>
+            <div class="glass rounded-[30px] overflow-hidden card flex flex-col">
+                <img src="https://m.media-amazon.com/images/I/81E5SrMrslL._AC_SL1500_.jpg" class="w-full h-72 object-cover">
+                <div class="p-8 flex-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-3xl font-black">Lego Power Box </h3>
+                        <p class="text-slate-300 mt-4 text-sm">ID: PROD-002. Барлық программасымен толық комплектісі.(арнайы үйірме ашқысы келген жанға)</p>
+                        <div class="text-4xl font-black text-yellow-400 mt-6">100 000 ₸</div>
+                    </div>
+                    <button onclick="addToCart('PROD-002', 'Lego Power Box', 100000)" class="mt-6 w-full bg-yellow-400 text-black py-4 rounded-2xl font-black text-xl hover:bg-yellow-300">Себетке қосу</button>
+                </div>
+            </div>
+            <div class="glass rounded-[30px] overflow-hidden card flex flex-col">
+                <img src="https://tse4.mm.bing.net/th/id/OIP._QwZGOhqR_JGGDnI4xEltgHaH6?rs=1&pid=ImgDetMain&o=7&rm=3" class="w-full h-72 object-cover">
+                <div class="p-8 flex-1 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-3xl font-black">Lego PB (тек конструктор)</h3>
+                        <p class="text-slate-300 mt-4 text-sm">ID: PROD-003. Арнайы үйірме үшін жасалынған,сайтқа доступ сатып алғандар ғана сатып ала алады.(Limited)</p>
+                        <div class="text-4xl font-black text-yellow-400 mt-6">50 000 ₸</div>
+                    </div>
+                    <button onclick="addToCart('PROD-003', 'Lego PB', 50000)" class="mt-6 w-full bg-yellow-400 text-black py-4 rounded-2xl font-black text-xl hover:bg-yellow-300">Себетке қосу</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="checkoutSection" class="pb-28 px-6">
+    <div class="max-w-5xl mx-auto glass rounded-[40px] p-10 border border-blue-500/30">
+        <h2 class="text-4xl md:text-5xl font-black mb-10 flex items-center gap-4">
+            🛒 Себет және Тапсырыс беру
+        </h2>
+        
+        <div class="grid lg:grid-cols-2 gap-12">
+            <div class="bg-slate-900/50 p-6 rounded-3xl h-fit">
+                <h3 class="text-2xl font-bold mb-6">Сіздің таңдауыңыз:</h3>
+                <div id="cartItemsList" class="space-y-4 mb-6 text-slate-300">
+                    Себет бос...
+                </div>
+                <div class="border-t border-slate-700 pt-4 flex justify-between items-center">
+                    <span class="text-xl">Жалпы сома:</span>
+                    <span id="cartTotalPrice" class="text-3xl font-black text-yellow-400">0 ₸</span>
+                </div>
+            </div>
+
+            <div>
+                <h3 class="text-2xl font-bold mb-6">Жеткізу мәліметтері:</h3>
+                <p class="text-sm text-yellow-400 mb-6 border border-yellow-400/50 p-3 rounded-xl bg-yellow-400/10">
+                    Төлем бізбен сөйлескеннен кейін Kaspi арқылы жасалады. Мәліметтеріңізді толтырып, "WhatsApp-қа жіберу" батырмасын басыңыз.
+                </p>
+                <div class="space-y-4">
+                    <input type="text" id="orderName" placeholder="Толық аты-жөніңіз" class="w-full p-5 rounded-2xl bg-slate-800 outline-none focus:ring-2 focus:ring-blue-500 transition">
+                    <input type="tel" id="orderPhone" placeholder="Телефон нөміріңіз (мысалы: 8701...)" class="w-full p-5 rounded-2xl bg-slate-800 outline-none focus:ring-2 focus:ring-blue-500 transition">
+                    <input type="text" id="orderAddress" placeholder="Толық мекенжай (Атырау қаласы, көше, үй...)" class="w-full p-5 rounded-2xl bg-slate-800 outline-none focus:ring-2 focus:ring-blue-500 transition">
+                    <input type="text" id="orderKaspi" placeholder="Kaspi нөміріңіз" class="w-full p-5 rounded-2xl bg-slate-800 outline-none focus:ring-2 focus:ring-blue-500 transition">
+                    
+                    <button onclick="sendOrderToWhatsapp()" class="mt-6 w-full bg-green-500 px-10 py-5 rounded-2xl font-black text-2xl flex justify-center items-center gap-3 hover:bg-green-400 transition">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 0C5.398 0 0 5.398 0 12.031c0 2.128.552 4.195 1.6 6.007L.03 24l6.104-1.57A11.96 11.96 0 0012.031 24c6.634 0 12.031-5.398 12.031-12.031S18.665 0 12.031 0zm0 22.06c-1.803 0-3.565-.483-5.112-1.4l-.367-.218-3.799.976.995-3.696-.239-.38C2.553 15.65 2.06 13.865 2.06 12.03 2.06 6.536 6.536 2.06 12.03 2.06s9.971 4.476 9.971 9.97-4.476 9.97-9.97 9.97zm5.46-7.44c-.298-.15-1.77-.874-2.043-.974-.272-.1-.471-.15-.669.15-.199.3-.77 1.023-.943 1.223-.174.199-.348.224-.646.074-2.008-1.02-3.32-2.18-4.664-4.502-.174-.3-.018-.462.13-.611.135-.135.298-.348.448-.523.149-.174.199-.298.298-.497.099-.199.05-.373-.025-.523-.075-.15-.669-1.616-.918-2.214-.242-.58-.487-.502-.669-.511l-.57-.009c-.199 0-.523.075-.796.374-.274.298-1.045 1.02-1.045 2.489 0 1.469 1.07 2.887 1.219 3.086.15.199 2.1 3.208 5.088 4.498 1.94 1.138 2.659.845 3.332.721.758-.14 1.77-.723 2.019-1.423.248-.697.248-1.295.174-1.423-.074-.124-.272-.199-.57-.348z"/></svg>
+                        WhatsApp-қа жіберу
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="pb-28 px-6">
+    <div class="max-w-5xl mx-auto glass rounded-[40px] p-10">
+        <div class="flex flex-wrap justify-between items-center mb-10 gap-4">
+            <h2 class="text-4xl md:text-5xl font-black">AI Консультант</h2>
+            <button onclick="window.open('https://wa.me/77719016170', '_blank')" class="bg-blue-500 px-6 py-3 rounded-2xl font-bold flex items-center gap-2">
+                👨‍💼 Тірі менеджермен сөйлесу
+            </button>
+        </div>
+        <div id="chatBox" class="chat-box bg-slate-900 rounded-3xl p-6 space-y-4">
+            <div class="bg-blue-500 p-4 rounded-2xl w-fit">
+                Сәлем! Мен ROBO LEGO көмекшісімін 🤖. Сұрақтарыңыз болса қойыңыз немесе тірі менеджерге жазыңыз.
+            </div>
+        </div>
+        <div class="flex gap-4 mt-6">
+            <input type="text" id="chatInput" placeholder="Сұрағыңызды жазыңыз..." class="flex-1 p-5 rounded-2xl bg-slate-800 text-white outline-none focus:ring-2 focus:ring-blue-500">
+            <button onclick="sendMessage()" class="bg-yellow-400 text-black px-10 rounded-2xl font-black">Жіберу</button>
+        </div>
+    </div>
+</section>
+
+<div id="loginModal" class="fixed inset-0 bg-black/80 z-[70] hidden items-center justify-center p-6">
+    <div class="glass rounded-[40px] p-10 w-full max-w-xl relative">
+        <button onclick="closeLogin()" class="absolute top-6 right-6 text-2xl">✖</button>
+        <h2 id="modalTitle" class="text-4xl font-black mb-4">Жүйеге кіру</h2>
+        <p id="modalDesc" class="text-slate-300 mb-8">Телефон нөмірі мен құпия сөзді енгізіңіз</p>
+        
+        <div class="space-y-4 mb-6">
+            <input type="text" id="regName" placeholder="Толық аты-жөніңіз" class="w-full p-5 rounded-2xl bg-slate-800 outline-none hidden focus:ring-2 focus:ring-blue-500">
+            <input type="tel" id="regPhone" placeholder="Телефон нөміріңіз" class="w-full p-5 rounded-2xl bg-slate-800 outline-none focus:ring-2 focus:ring-blue-500">
+            <input type="password" id="regPassword" placeholder="Құпия сөз" class="w-full p-5 rounded-2xl bg-slate-800 outline-none focus:ring-2 focus:ring-blue-500">
+        </div>
+        
+        <button id="submitAuthBtn" onclick="handleAuthSubmit()" class="w-full bg-blue-500 text-white py-5 rounded-2xl font-black text-xl mb-4 hover:bg-blue-400 transition">
+            Кіру
+        </button>
+
+        <button id="switchAuthModeBtn" onclick="toggleAuthMode()" class="w-full text-blue-400 hover:text-blue-300 font-bold text-center block mb-4">
+            Жаңа аккаунт ашу (Тіркелу)
+        </button>
+        
+        <div class="flex items-center gap-4 my-6">
+            <div class="h-[1px] bg-slate-700 flex-1"></div>
+            <span class="text-slate-400">немесе</span>
+            <div class="h-[1px] bg-slate-700 flex-1"></div>
+        </div>
+
+        <button onclick="alert('Бұл функцияны қосу үшін кодқа Firebase Auth жалғау керек')" class="w-full bg-white text-black py-4 rounded-2xl font-bold text-lg flex justify-center items-center gap-3">
+            <img src="https://www.svgrepo.com/show/475656/google-color.svg" class="w-6 h-6">
+            Google арқылы кіру
+        </button>
+    </div>
+</div>
+
+<script>
+    // --- 1. АТЫРАУ ЕСКЕРТУІ ---
+    window.onload = function() {
+        if(!localStorage.getItem('atyrauAlertShown')) {
+            document.getElementById('cityAlertModal').style.display = 'flex';
+        }
+        checkLoginStatus();
+        updateCartUI();
+    };
+
+    function closeCityAlert() {
+        document.getElementById('cityAlertModal').style.display = 'none';
+        localStorage.setItem('atyrauAlertShown', 'true');
+    }
+
+    // --- 2. СЕБЕТ ЖҮЙЕСІ (CART) ---
+    let cart = JSON.parse(localStorage.getItem('roboCart')) || [];
+
+    function addToCart(id, name, price) {
+        let existingItem = cart.find(item => item.id === id);
+        if(existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({ id, name, price, quantity: 1 });
+        }
+        saveCart();
+        alert(`✅ ${name} себетке қосылды!`);
+    }
+
+    function removeFromCart(id) {
+        cart = cart.filter(item => item.id !== id);
+        saveCart();
+    }
+
+    function saveCart() {
+        localStorage.setItem('roboCart', JSON.stringify(cart));
+        updateCartUI();
+    }
+
+    function updateCartUI() {
+        const cartCount = document.getElementById('cartCount');
+        const cartList = document.getElementById('cartItemsList');
+        const cartTotal = document.getElementById('cartTotalPrice');
+        
+        let totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartCount.innerText = totalItems;
+
+        if(cart.length === 0) {
+            cartList.innerHTML = '<p class="text-slate-400">Себет бос. Тауар таңдаңыз.</p>';
+            cartTotal.innerText = '0 ₸';
+            return;
+        }
+
+        let html = '';
+        let totalSum = 0;
+
+        cart.forEach(item => {
+            let itemTotal = item.price * item.quantity;
+            totalSum += itemTotal;
+            html += `
+                <div class="flex justify-between items-center bg-slate-800 p-4 rounded-2xl">
+                    <div>
+                        <p class="font-bold text-lg">${item.name}</p>
+                        <p class="text-sm text-slate-400">${item.quantity} дана x ${item.price} ₸</p>
+                        <p class="text-xs text-yellow-500 mt-1">ID: ${item.id}</p>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-bold text-lg">${itemTotal} ₸</p>
+                        <button onclick="removeFromCart('${item.id}')" class="text-red-400 text-sm hover:text-red-300 mt-1">Өшіру</button>
+                    </div>
+                </div>
+            `;
+        });
+
+        cartList.innerHTML = html;
+        cartTotal.innerText = totalSum + ' ₸';
+    }
+
+    function openCart() {
+        document.getElementById('checkoutSection').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    // --- 3. WHATSAPP-ҚА ТАПСЫРЫС ЖІБЕРУ ---
+    function sendOrderToWhatsapp() {
+        if(cart.length === 0) {
+            alert('Себетіңіз бос! Алдымен тауар таңдаңыз.');
+            return;
+        }
+
+        const name = document.getElementById('orderName').value.trim();
+        const phone = document.getElementById('orderPhone').value.trim();
+        const address = document.getElementById('orderAddress').value.trim();
+        const kaspi = document.getElementById('orderKaspi').value.trim();
+
+        if(!name || !phone || !address || !kaspi) {
+            alert('Барлық жолдарды (Аты, Телефон, Мекенжай, Kaspi) толтырыңыз!');
+            return;
+        }
+
+        const sellerPhone = "77719016170"; 
+
+        let message = `🛒 *ЖАҢА ТАПСЫРЫС (Атырау)* 🛒\n\n`;
+        message += `👤 *Аты-жөні:* ${name}\n`;
+        message += `📞 *Байланыс:* ${phone}\n`;
+        message += `📍 *Мекенжай:* ${address}\n`;
+        message += `💳 *Kaspi нөмірі:* ${kaspi}\n\n`;
+        message += `📦 *ТАУАРЛАР:* \n`;
+        
+        let totalSum = 0;
+        cart.forEach(item => {
+            let itemTotal = item.price * item.quantity;
+            totalSum += itemTotal;
+            message += `▪️ ${item.name} (ID: ${item.id}) - ${item.quantity} дана x ${item.price} ₸ = ${itemTotal} ₸\n`;
+        });
+
+        message += `\n💰 *ЖАЛПЫ СОМА:* ${totalSum} ₸`;
+
+        const encodedMessage = encodeURIComponent(message);
+        cart = [];
+        saveCart();
+
+        window.open(`https://wa.me/${sellerPhone}?text=${encodedMessage}`, '_blank');
+    }
+
+    // --- 4. ЖАҢАРТЫЛҒАН АВТОРИЗАЦИЯ ЖҮЙЕСІ (ПРОФИЛЬ ЖӘНЕ ПАРОЛЬ) ---
+    let isSignUpMode = false; // Бастапқы күй - "Кіру" режимі
+
+    function openLogin() { 
+        document.getElementById('loginModal').style.display = 'flex'; 
+        resetAuthForm();
+    }
+    
+    function closeLogin() { 
+        document.getElementById('loginModal').style.display = 'none'; 
+    }
+
+    function resetAuthForm() {
+        document.getElementById('regName').value = '';
+        document.getElementById('regPhone').value = '';
+        document.getElementById('regPassword').value = '';
+    }
+
+    // Тіркелу және Кіру режимдерін ауыстыру функциясы
+    function toggleAuthMode() {
+        isSignUpMode = !isSignUpMode;
+        const nameField = document.getElementById('regName');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalDesc = document.getElementById('modalDesc');
+        const submitBtn = document.getElementById('submitAuthBtn');
+        const switchBtn = document.getElementById('switchAuthModeBtn');
+
+        if (isSignUpMode) {
+            nameField.classList.remove('hidden');
+            modalTitle.innerText = "Тіркелу";
+            modalDesc.innerText = "Жаңа профиль жасау үшін мәліметтерді толтырыңыз";
+            submitBtn.innerText = "Тіркелу";
+            switchBtn.innerText = "Аккаунтыңыз бар ма? Жүйеге кіру";
+        } else {
+            nameField.classList.add('hidden');
+            modalTitle.innerText = "Жүйеге кіру";
+            modalDesc.innerText = "Телефон нөмірі мен құпия сөзді енгізіңіз";
+            submitBtn.innerText = "Кіру";
+            switchBtn.innerText = "Жаңа аккаунт ашу (Тіркелу)";
+        }
+    }
+
+    // Тіркелу немесе Кіру батырмасын басқанда орындалатын логика
+    function handleAuthSubmit() {
+        const name = document.getElementById('regName').value.trim();
+        const phone = document.getElementById('regPhone').value.trim();
+        const password = document.getElementById('regPassword').value.trim();
+
+        if (!phone || !password) {
+            alert('Телефон нөмірі мен құпия сөзді міндетті түрде толтырыңыз!');
+            return;
+        }
+
+        // Жергілікті қоймадан барлық қолданушыларды алу
+        let users = JSON.parse(localStorage.getItem('roboUsers')) || [];
+
+        if (isSignUpMode) {
+            // --- ТІРКЕЛУ ЛОГИКАСЫ ---
+            if (!name) {
+                alert('Аты-жөніңізді жазыңыз!');
+                return;
+            }
+            // Телефон нөмірінің қайталанбауын тексеру
+            let userExists = users.some(u => u.phone === phone);
+            if (userExists) {
+                alert('Бұл телефон нөмірі қазірдің өзінде тіркелген!');
+                return;
+            }
+
+            // Жаңа қолданушыны тізімге қосу
+            users.push({ name, phone, password });
+            localStorage.setItem('roboUsers', JSON.stringify(users));
+            alert('🎉 Тіркелу сәтті аяқталды! Енді құпия сөзіңізбен кіре аласыз.');
+            toggleAuthMode(); // Кіру режиміне автоматты ауыстыру
+        } else {
+            // --- КІРУ ЛОГИКАСЫ ---
+            let foundUser = users.find(u => u.phone === phone && u.password === password);
+            
+            if (foundUser) {
+                localStorage.setItem('roboUser', foundUser.name);
+                checkLoginStatus();
+                closeLogin();
+                alert(`Сәлем, ${foundUser.name}! Жүйеге сәтті кірдіңіз.`);
+                
+                // Тапсырыс беру формасына автоматты түрде атын жазу
+                document.getElementById('orderName').value = foundUser.name;
+                document.getElementById('orderPhone').value = foundUser.phone;
+            } else {
+                alert('Қате телефон нөмірі немесе құпия сөз!');
+            }
+        }
+    }
+
+    function checkLoginStatus() {
+        const user = localStorage.getItem('roboUser');
+        const authBtn = document.getElementById('authBtn');
+        if(user) {
+            authBtn.innerText = `👤 ${user} (Шығу)`;
+            authBtn.onclick = logout;
+            authBtn.classList.replace('bg-blue-500', 'bg-slate-700');
+            
+            // Егер қолданушы жүйеге кірген болса, оның атын формаға қою
+            if(document.getElementById('orderName').value === "") {
+                document.getElementById('orderName').value = user;
+            }
+        }
+    }
+
+    function logout() {
+        localStorage.removeItem('roboUser');
+        const authBtn = document.getElementById('authBtn');
+        authBtn.innerText = 'Тіркелу / Кіру';
+        authBtn.onclick = openLogin;
+        authBtn.classList.replace('bg-slate-700', 'bg-blue-500');
+        document.getElementById('orderName').value = "";
+        document.getElementById('orderPhone').value = "";
+        alert('Жүйеден шықтыңыз.');
+    }
+
+    // --- 5. AI CHAT ---
+    function sendMessage() {
+        const input = document.getElementById('chatInput');
+        const chat = document.getElementById('chatBox');
+        const userText = input.value;
+        if(userText === '') return;
+
+        chat.innerHTML += `<div class="bg-yellow-400 text-black p-4 rounded-2xl ml-auto w-fit max-w-[80%]">${userText}</div>`;
+        
+        let answer = 'Менен тек баға,жеткізу,робот,төлем,байланыс деп сұрасаңыз ғана жауап беремін менің мүмкіндігімді әкімші шектеп тастаған.Кешіріңіз бірақ мен сіздің жазбаңызды түсінбедім, өтінемін тірі менеджерге WhatsApp арқылы жазыңызшы 😊';
+        let lower = userText.toLowerCase();
+
+        if(lower.includes('баға') || lower.includes('қанша')) answer = 'Біздің робот наборлары 95 000 ₸ бастап сатылады.';
+        else if(lower.includes('жеткізу') || lower.includes('қала')) answer = 'Қазіргі уақытта тек Атырау қаласына жеткіземіз 🚚';
+        else if(lower.includes('робот') || lower.includes('lego')) answer = 'Бізде LEGO WeDo 2.0, AI Robot және Car Kit бар. Себетке салып, тапсырыс бере аласыз 🤖';
+        else if(lower.includes('төлем') || lower.includes('kaspi')) answer = 'Төлем сіз тапсырысты рәсімдеп, бізбен байланысқаннан кейін Kaspi арқылы жасалады.';
+        else if(lower.includes('байланыс') || lower.includes('телефон')) answer = 'Әкімшінің жеке ұялы телефон нөмері:+77719016170';
+
+        setTimeout(() => {
+            chat.innerHTML += `<div class="bg-blue-500 p-4 rounded-2xl w-fit max-w-[80%]">${answer}</div>`;
+            chat.scrollTop = chat.scrollHeight;
+        }, 500);
+
+        input.value = '';
+    }
+</script>
+</body>
+</html>

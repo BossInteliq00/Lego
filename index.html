@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>Robo Lego | Робототехника</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="C:\Users\user\Documents\robolegoeducation\image\icon.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Inter',sans-serif;
+      scroll-behavior:smooth;
+    }
+
+    body{
+      background:#020617;
+      color:white;
+      overflow-x:hidden;
+    }
+
+    .glass{
+      background:rgba(255,255,255,0.08);
+      backdrop-filter:blur(14px);
+      border:1px solid rgba(255,255,255,0.1);
+    }
+
+    .gradient-text{
+      background:linear-gradient(to right,#facc15,#38bdf8);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+
+    .floating{
+      animation:float 6s ease-in-out infinite;
+    }
+
+    @keyframes float{
+      0%{transform:translateY(0px);}
+      50%{transform:translateY(-20px);}
+      100%{transform:translateY(0px);}
+    }
+
+    .card-hover{
+      transition:0.4s;
+    }
+
+    .card-hover:hover{
+      transform:translateY(-10px) scale(1.02);
+    }
+
+    .lego-block{
+      position:absolute;
+      width:70px;
+      height:70px;
+      border-radius:20px;
+      opacity:0.15;
+      animation:float 8s infinite ease-in-out;
+    }
+
+    .modal{
+      display:none;
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.75);
+      z-index:999;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+    }
+
+    .modal-content{
+      width:100%;
+      max-width:1000px;
+      height:80vh;
+      background:#0f172a;
+      border-radius:30px;
+      overflow:hidden;
+      position:relative;
+      border:1px solid rgba(255,255,255,0.1);
+    }
+
+    .modal iframe{
+      width:100%;
+      height:100%;
+      border:none;
+      background:#020617;
+    }
+
+    .close-btn{
+      position:absolute;
+      top:15px;
+      right:15px;
+      background:#ef4444;
+      width:45px;
+      height:45px;
+      border-radius:999px;
+      border:none;
+      color:white;
+      font-size:22px;
+      cursor:pointer;
+      z-index:10;
+    }
+
+    .menu-open{
+      display:flex !important;
+    }
+
+    /* Анимациялы жаңа ашылмалы мәзір стилі */
+    .dropdown-menu {
+      opacity: 0;
+      transform: translateY(-15px) scale(0.95);
+      pointer-events: none;
+      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .dropdown-menu.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="authScreen" class="fixed inset-0 z-[100] bg-[#020617] flex items-center justify-center p-6">
+    <div class="absolute w-96 h-96 bg-yellow-400 blur-[150px] opacity-20 rounded-full top-10 left-10"></div>
+    <div class="absolute w-96 h-96 bg-blue-500 blur-[150px] opacity-20 rounded-full bottom-10 right-10"></div>
+    
+    <div class="glass max-w-md w-full p-8 rounded-[35px] text-center relative z-10">
+      <div class="w-16 h-16 bg-yellow-400 rounded-2xl flex items-center justify-center text-black text-3xl mx-auto mb-6 shadow-xl">🤖</div>
+      <h2 class="text-3xl font-black gradient-text mb-2">WeDoLab-қа кіру</h2>
+      <p class="text-slate-400 text-sm mb-8">Платформаға кіру үшін әкімші берген ID мен құпия сөзді енгізіңіз</p>
+      
+      <div class="space-y-4 text-left">
+        <div>
+          <label class="block text-sm font-semibold text-slate-300 mb-2">Пайдаланушы ID</label>
+          <input type="text" id="authID" placeholder="Мысалы: ID-101" class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-yellow-400 duration-300">
+        </div>
+        <div>
+          <label class="block text-sm font-semibold text-slate-300 mb-2">Құпия сөз</label>
+          <input type="password" id="authPassword" placeholder="••••••••" class="w-full bg-slate-900 border border-slate-700 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-yellow-400 duration-300">
+        </div>
+      </div>
+
+      <button onclick="handleLogin()" class="w-full mt-8 bg-yellow-400 text-black py-4 rounded-2xl font-bold text-lg hover:scale-[1.02] active:scale-95 duration-300 shadow-lg shadow-yellow-400/20">
+        Жүйеге кіру
+      </button>
+
+      <div id="authFeedback" class="mt-4 font-bold text-sm min-h-[20px]"></div>
+
+      <div class="mt-6 pt-5 border-t border-slate-800/60">
+        <p class="text-slate-400 text-xs mb-3">Платформада әлі аккаунтыңыз жоқ па?</p>
+        <a href="https://wa.me/77719016170?text=Сәлеметсіз бе! Мен Robo Lego платформасына тіркеліп, ID мен құпия сөз алғым келеді." 
+           target="_blank" 
+           class="w-full bg-green-500/10 text-green-400 border border-green-500/30 py-3 rounded-2xl font-bold text-sm flex items-center justify-center gap-2 hover:bg-green-500 hover:text-white duration-300">
+          🟢 Тіркелу үшін WhatsApp-қа жазу
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div id="mainWebsite" class="hidden">
+
+    <div class="modal" id="modal">
+      <div class="modal-content">
+        <button class="close-btn" onclick="closeModal()">✕</button>
+        <iframe id="modalFrame"></iframe>
+      </div>
+    </div>
+
+    <div id="profileModal" class="modal">
+      <div class="glass max-w-md w-full p-8 rounded-[30px] relative text-center">
+        <button class="close-btn !top-4 !right-4" onclick="toggleProfileModal(false)">✕</button>
+        <h3 class="text-2xl font-black gradient-text mb-6">Менің Профилім</h3>
+        
+        <div class="relative w-32 h-32 mx-auto mb-6 group">
+          <img id="profileAvatar" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="w-full h-full object-cover rounded-full border-4 border-yellow-400 shadow-xl">
+          <label class="absolute inset-0 bg-black/60 rounded-full flex items-center justify-center text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer">
+            Фото қою
+            <input type="file" id="avatarInput" accept="image/*" class="hidden" onchange="uploadAvatar()">
+          </label>
+        </div>
+
+        <h4 id="profileName" class="text-2xl font-bold">Оқушы Аты</h4>
+        <p id="profileGroup" class="text-yellow-400 font-medium mt-1">Топ атауы</p>
+        
+        <div class="bg-slate-950/60 rounded-2xl p-4 mt-6 text-left space-y-2 text-sm text-slate-300">
+          <p>📍 <strong>Қала:</strong> <span id="profileCity">-</span></p>
+          <p>🆔 <strong>Тіркеу ID:</strong> <span id="profileIDDisplay">-</span></p>
+          <p>🟢 <strong>Статус:</strong> <span class="text-green-400 font-bold">Жүйеде белсенді</span></p>
+        </div>
+
+        <button onclick="handleLogout()" class="mt-8 bg-red-500/20 text-red-400 border border-red-500/30 w-full py-3 rounded-2xl font-bold hover:bg-red-500 hover:text-white duration-300">
+          Жүйеден шығу
+        </button>
+      </div>
+    </div>
+
+    <div id="onlineModal" class="modal">
+      <div class="glass max-w-md w-full p-8 rounded-[30px] relative">
+        <button class="close-btn !top-4 !right-4" onclick="toggleOnlineModal(false)">✕</button>
+        <h3 class="text-2xl font-black text-yellow-400 mb-6 flex items-center gap-2">
+          🟢 Қазір платформада кім бар?
+        </h3>
+        <div id="onlineList" class="space-y-3 max-h-[40vh] overflow-y-auto pr-2"></div>
+      </div>
+    </div>
+
+    <nav class="fixed top-0 left-0 w-full z-50 px-6 py-4">
+      <div class="glass max-w-7xl mx-auto rounded-3xl px-8 py-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 bg-yellow-400 rounded-2xl flex items-center justify-center text-black text-2xl">🤖</div>
+          <h1 class="text-3xl font-black gradient-text">ROBO LEGO</h1>
+        </div>
+
+        <div class="hidden md:flex items-center gap-6 text-lg">
+          <div class="relative inline-block text-left">
+            <button id="desktopMenuBtn" class="flex items-center gap-2 bg-white/5 border border-white/10 hover:border-yellow-400/50 px-5 py-2 rounded-2xl text-slate-200 hover:text-yellow-400 font-semibold duration-300">
+              Мәзір <span class="text-xs transition-transform duration-300" id="menuArrow">▼</span>
+            </button>
+            <div id="desktopDropdown" class="dropdown-menu glass absolute left-0 mt-3 w-52 rounded-2xl p-3 flex flex-col gap-1 z-50 shadow-2xl">
+              <a href="#home" class="px-4 py-2.5 rounded-xl hover:bg-yellow-400/10 hover:text-yellow-400 duration-200 text-base">Басты бет</a>
+              <a href="#videos" class="px-4 py-2.5 rounded-xl hover:bg-yellow-400/10 hover:text-yellow-400 duration-200 text-base">Сабақтар</a>
+              <a href="#projects" class="px-4 py-2.5 rounded-xl hover:bg-yellow-400/10 hover:text-yellow-400 duration-200 text-base">Жобалар</a>
+              <a href="#materials" class="px-4 py-2.5 rounded-xl hover:bg-yellow-400/10 hover:text-yellow-400 duration-200 text-base">Материалдар</a>
+              <a href="#about" class="px-4 py-2.5 rounded-xl hover:bg-yellow-400/10 hover:text-yellow-400 duration-200 text-base">Біз туралы</a>
+            </div>
+          </div>
+          
+          <button onclick="toggleOnlineModal(true)" class="bg-blue-600/30 text-blue-400 hover:bg-blue-600 hover:text-white border border-blue-500/30 px-4 py-2 rounded-xl text-sm font-bold duration-300">
+            Басқарушылар онлайн ба? 	
+          </button>
+
+          <div onclick="toggleProfileModal(true)" class="flex items-center gap-3 bg-white/5 hover:bg-white/10 border border-white/10 px-4 py-2 rounded-2xl cursor-pointer duration-300">
+            <img id="navAvatar" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" class="w-8 h-8 rounded-full object-cover border border-yellow-400">
+            <span id="navUserName" class="text-sm font-bold text-slate-200">Оқушы</span>
+          </div>
+        </div>
+
+        <button id="menuBtn" class="md:hidden text-3xl">☰</button>
+      </div>
+
+      <div id="mobileMenu" class="glass hidden flex-col gap-5 mt-4 rounded-3xl p-6 mx-4">
+        <a href="#home">Басты бет</a>
+        <a href="#videos">Видео сабақтар</a>
+        <a href="#projects">Жобалар</a>
+        <a href="#materials">Материалдар</a>
+        <a href="#about">Біз туралы</a>
+        <button onclick="toggleOnlineModal(true)" class="bg-blue-600 text-white p-3 rounded-xl text-sm font-bold text-center">🌐 Онлайн кім бар?</button>
+        <button onclick="toggleProfileModal(true)" class="bg-yellow-400 text-black p-3 rounded-xl text-sm font-bold text-center">👤 Mentің Профилім</button>
+      </div>
+    </nav>
+
+    <section id="home" class="relative min-h-screen flex items-center px-6 overflow-hidden">
+      <div class="lego-block bg-yellow-400 top-40 left-20"></div>
+      <div class="lego-block bg-blue-500 bottom-40 right-20"></div>
+      <div class="lego-block bg-red-500 top-60 right-40"></div>
+
+      <div class="absolute w-80 h-80 bg-yellow-400 blur-[120px] opacity-20 rounded-full top-0 left-0"></div>
+      <div class="absolute w-80 h-80 bg-blue-500 blur-[120px] opacity-20 rounded-full bottom-0 right-0"></div>
+
+      <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-16 items-center relative z-10">
+        <div>
+          <h1 class="text-6xl md:text-8xl font-black leading-tight">
+            <span class="gradient-text">Қош келдіңіз!</span>
+          </h1>
+          <p class="text-2xl text-slate-300 mt-8">Робототехниканы осында үйрен!</p>
+          <button onclick="openModal(homePage)" class="mt-10 bg-yellow-400 text-black px-10 py-5 rounded-3xl text-xl font-bold hover:scale-105 duration-300 shadow-2xl">Мында басыңыз</button>
+        </div>
+        <div class="flex justify-center">
+          <div class="floating w-80 h-80 bg-gradient-to-br from-yellow-400 to-blue-500 rounded-[50px] shadow-2xl flex items-center justify-center text-9xl">🤖</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="videos" class="py-28 px-6">
+      <div class="max-w-7xl mx-auto">
+        <h2 class="text-5xl font-black mb-16">Сабақтың Басталуы</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="glass rounded-[30px] overflow-hidden card-hover">
+            <div class="h-56 bg-gradient-to-br from-blue-500 to-yellow-400 flex items-center justify-center text-7xl">▶</div>
+            <div class="p-8">
+              <h3 class="text-2xl font-bold">Бастапқы робототехника</h3>
+              <p class="text-slate-300 mt-4">Жалпы робототехника бағытының қалай жұмыс істейтінімен танысу</p>
+              <button onclick="openModal(lessonPage)" class="mt-6 bg-yellow-400 text-black px-6 py-3 rounded-2xl font-bold">Қарау</button>
+            </div>
+          </div>
+          <div class="glass rounded-[30px] overflow-hidden card-hover">
+            <div class="h-56 bg-gradient-to-br from-red-500 to-yellow-400 flex items-center justify-center text-7xl">⚙</div>
+            <div class="p-8">
+              <h3 class="text-2xl font-bold">Power Box қолданбасы</h3>
+              <p class="text-slate-300 mt-4">Роботты бағдарламалауға арналған мобильді қосымшаны орнату.</p>
+              <button onclick="openModal(appPage)" class="mt-6 bg-yellow-400 text-black px-6 py-3 rounded-2xl font-bold">Қарау</button>
+            </div>
+          </div>
+          <div class="glass rounded-[30px] overflow-hidden card-hover">
+            <div class="h-56 bg-gradient-to-br from-cyan-400 to-blue-600 flex items-center justify-center text-7xl">🧠</div>
+            <div class="p-8">
+              <h3 class="text-2xl font-bold">Роботты Бағдарламалау Ережелері</h3>
+              <p class="text-slate-300 mt-4">Балаларға арналған жеңіл бағдарламалау.</p>
+              <button onclick="openModal(programPage)" class="mt-6 bg-yellow-400 text-black px-6 py-3 rounded-2xl font-bold">Ашy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="materials" class="py-28 px-6 bg-slate-900">
+      <div class="max-w-7xl mx-auto">
+        <h2 class="text-5xl font-black mb-16">Материалдар</h2>
+        <div class="grid md:grid-cols-4 gap-8">
+          <div class="glass rounded-[30px] p-8 text-center card-hover">
+            <div class="text-6xl">📘</div>
+            <h3 class="text-2xl font-bold mt-6">Нұсқаулық</h3>
+            <button onclick="openModal(guidePage)" class="mt-6 bg-blue-500 px-6 py-3 rounded-2xl font-bold">Ашу</button>
+          </div>
+          <div class="glass rounded-[30px] p-8 text-center card-hover">
+            <div class="text-6xl">🧩</div>
+            <h3 class="text-2xl font-bold mt-6">Тауарлар</h3>
+            <a href="shop.html" class="inline-block mt-6 bg-blue-500 px-6 py-3 rounded-2xl font-bold">Дүкенге өту</a>
+          </div>
+          <div class="glass rounded-[30px] p-8 text-center card-hover">
+            <div class="text-6xl">📄</div>
+            <h3 class="text-2xl font-bold mt-6">Сабақтар</h3>
+            <button onclick="openModal(extraLessonPage)" class="mt-6 bg-blue-500 px-6 py-3 rounded-2xl font-bold">Ашу</button>
+          </div>
+          <div class="glass rounded-[30px] p-8 text-center card-hover">
+            <div class="text-6xl">🚀</div>
+            <h3 class="text-2xl font-bold mt-6">Ережелер</h3>
+            <button onclick="openModal(rulesPage)" class="mt-6 bg-blue-500 px-6 py-3 rounded-2xl font-bold">Ашу</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="py-28 px-6">
+      <div class="max-w-7xl mx-auto">
+        <h2 class="text-5xl font-black mb-16">Робот жобалары</h2>
+        <div class="grid md:grid-cols-2 gap-8">
+          <div class="bg-gradient-to-br from-yellow-400 to-red-500 rounded-[40px] p-10 card-hover">
+            <div class="bg-white/20 p-10 rounded-[30px]">
+              <h3 class="text-4xl font-black">C деңгейіндегі роботтарды жасау бастамасы.</h3>
+              <p class="mt-6 text-lg">Болашақтың іргетасын осында баста.</p>
+              <button onclick="openModal(projectOne)" class="mt-6 bg-black text-white px-6 py-3 rounded-2xl font-bold">Толығырақ</button>
+            </div>
+          </div>
+          <div class="bg-gradient-to-br from-blue-500 to-cyan-400 rounded-[40px] p-10 card-hover">
+            <div class="bg-white/20 p-10 rounded-[30px]">
+              <h3 class="text-4xl font-black">С деңгейіндегі роботтар турнирі</h3>
+              <p class="mt-6 text-lg">Атырау қаласының ірі робототехника үйірмелері арасындағы жарыс.</p>
+              <button onclick="openModal(projectTwo)" class="mt-6 bg-black text-white px-6 py-3 rounded-2xl font-bold">Қатысқым келеді</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="py-28 px-6 bg-slate-900">
+      <div class="max-w-5xl mx-auto text-center">
+        <h2 class="text-5xl font-black mb-10">Сертфикат қалай аламыз?</h2>
+        <p class="text-2xl text-slate-300 leading-relaxed">
+          Сертфикат алу үшін әкімшіге жазасыдар өзіңіздің жеке аиди және атыңызды жазып сізге жеке тест береді,соны орындап тапсырасыздар және тапсырып  болғаннан соң сіздерге сертфикат алуға мүмкіндік болады.Ол әрине тестті жақсы тапсырғандарыңызға байланысты.Сәттілік әкімшіге WhatsApp арқылы байланыса аласыздар,төмендегі сілтемеге өтіңіз.
+        </p>
+      </div>
+    </section>
+
+    <footer id="contact" class="bg-gradient-to-r from-blue-600 to-yellow-400 py-16 px-6">
+      <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
+        <div>
+          <h2 class="text-4xl font-black text-black">ROBO LEGO EDUCATION</h2>
+          <p class="text-black/80 mt-4">Болашақ инженерлерге арналған платформа</p>
+        </div>
+        <div class="flex gap-6">
+          <a href="https://wa.me/77719016170" target="_blank" class="bg-green-500 text-white px-6 py-3 rounded-2xl font-bold hover:scale-105 duration-300">WhatsApp</a>
+          <a href="https://t.me/robolegoeducation" target="_blank" class="bg-blue-500 text-white px-6 py-3 rounded-2xl font-bold hover:scale-105 duration-300">Telegram</a>
+        </div>
+        <div class="text-black font-semibold text-center">© 2026 WeDoLab. Барлық құқықтар қорғалған.</div>
+      </div>
+    </footer>
+
+  </div>
+
+  <script>
+    const mockUsers = {
+      "DEV-2026": { 
+        name: "Әзірлеуші (Разработчик)", 
+        city: "Атырау", 
+        group: "Платформа Әкімшісі", 
+        password: "devpassword" 
+      },
+      "ID-101": { name: "Серікұлы Аманбол", city: "Атырау", group: "Платформа әкімшісі", password: "123" },
+    };
+
+    const onlineStudentsMock = [];
+
+    function handleLogin() {
+      const idInput = document.getElementById("authID").value.trim();
+      const passInput = document.getElementById("authPassword").value.trim();
+      const feedback = document.getElementById("authFeedback");
+
+      if (!idInput || !passInput) {
+        feedback.className = "mt-4 font-bold text-sm text-red-500";
+        feedback.innerText = "Барлық өрістерді толтырыңыз!";
+        return;
+      }
+
+      const user = mockUsers[idInput];
+
+      if (!user) {
+        feedback.className = "mt-4 font-bold text-sm text-red-500";
+        feedback.innerText = "Қате! Мұндай ID тіркелмеген.";
+        return;
+      }
+
+      if (user.password !== passInput) {
+        alert("Құпия сөз қате! Экрандық ескерту: Енгізілген құпия сөз тіркелгіге сәйкес келмейді.");
+        feedback.className = "mt-4 font-bold text-sm text-red-500";
+        feedback.innerText = "Құпия сөз қате!";
+        return;
+      }
+
+      feedback.className = "mt-4 font-bold text-sm text-green-400";
+      feedback.innerText = "Дұрыс! Жүйеге сәтті кірдіңіз...";
+
+      user.id = idInput;
+      localStorage.setItem("currentRoboUser", JSON.stringify(user));
+
+      setTimeout(() => {
+        initApp();
+      }, 1000);
+    }
+
+    function initApp() {
+      const savedUser = localStorage.getItem("currentRoboUser");
+      if (savedUser) {
+        const user = JSON.parse(savedUser);
+        
+        document.getElementById("authScreen").style.display = "none";
+        document.getElementById("mainWebsite").classList.remove("hidden");
+        
+        document.getElementById("navUserName").innerText = user.name;
+        
+        document.getElementById("profileName").innerText = user.name;
+        document.getElementById("profileGroup").innerText = user.group;
+        document.getElementById("profileCity").innerText = user.city;
+        document.getElementById("profileIDDisplay").innerText = user.id;
+
+        const savedAvatar = localStorage.getItem("avatar_" + user.id);
+        if (savedAvatar) {
+          document.getElementById("profileAvatar").src = savedAvatar;
+          document.getElementById("navAvatar").src = savedAvatar;
+        } else {
+          document.getElementById("profileAvatar").src = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+          document.getElementById("navAvatar").src = "https://cdn-icons-png.flaticon.com/512/3135/3135715.png";
+        }
+
+        buildOnlineList(user.name);
+      } else {
+        document.getElementById("authScreen").style.display = "flex";
+        document.getElementById("mainWebsite").classList.add("hidden");
+      }
+    }
+
+    function uploadAvatar() {
+      const file = document.getElementById("avatarInput").files[0];
+      const reader = new FileReader();
+      const user = JSON.parse(localStorage.getItem("currentRoboUser"));
+
+      reader.onloadend = function() {
+        const base64String = reader.result;
+        localStorage.setItem("avatar_" + user.id, base64String);
+        document.getElementById("profileAvatar").src = base64String;
+        document.getElementById("navAvatar").src = base64String;
+      }
+
+      if (file) {
+        reader.readAsDataURL(file);
+      }
+    }
+
+    function buildOnlineList(currentName) {
+      const listContainer = document.getElementById("onlineList");
+      listContainer.innerHTML = "";
+
+      const selfDiv = document.createElement("div");
+      selfDiv.className = "flex items-center justify-between bg-yellow-400/10 border border-yellow-400/30 p-3 rounded-xl";
+      selfDiv.innerHTML = `<div><p class="font-bold text-yellow-400">${currentName} (Сіз)</p><p class="text-xs text-slate-400">Қазір белсенді</p></div><span class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></span>`;
+      listContainer.appendChild(selfDiv);
+
+      onlineStudentsMock.forEach(student => {
+        const div = document.createElement("div");
+        div.className = "flex items-center justify-between bg-white/5 border border-white/10 p-3 rounded-xl";
+        div.innerHTML = `<div><p class="font-bold">${student.name}</p><p class="text-xs text-slate-400">${student.group}</p></div><span class="w-2 h-2 bg-green-500 rounded-full"></span>`;
+        listContainer.appendChild(div);
+      });
+    }
+
+    function handleLogout() {
+      localStorage.removeItem("currentRoboUser");
+      toggleProfileModal(false);
+      document.getElementById("authID").value = "";
+      document.getElementById("authPassword").value = "";
+      document.getElementById("authFeedback").innerText = "";
+      initApp();
+    }
+
+    function toggleProfileModal(show) {
+      document.getElementById("profileModal").style.display = show ? "flex" : "none";
+    }
+
+    function toggleOnlineModal(show) {
+      document.getElementById("onlineModal").style.display = show ? "flex" : "none";
+    }
+
+    window.addEventListener("DOMContentLoaded", initApp);
+
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    menuBtn.addEventListener("click", () => {
+      mobileMenu.classList.toggle("menu-open");
+    });
+
+    // Жаңа Мәзір батырмасы мен ашылмалы тізім логикасы
+    const desktopMenuBtn = document.getElementById("desktopMenuBtn");
+    const desktopDropdown = document.getElementById("desktopDropdown");
+    const menuArrow = document.getElementById("menuArrow");
+
+    desktopMenuBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = desktopDropdown.classList.toggle("show");
+      menuArrow.style.transform = isOpen ? "rotate(180deg)" : "rotate(0deg)";
+    });
+
+    // Мәзір ішіндегі сілтемелер басылғанда мәзірді жабу
+    desktopDropdown.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        desktopDropdown.classList.remove("show");
+        menuArrow.style.transform = "rotate(0deg)";
+      });
+    });
+
+    const modal = document.getElementById("modal");
+    const modalFrame = document.getElementById("modalFrame");
+
+    function openModal(content){
+      modal.style.display = "flex";
+      modalFrame.srcdoc = content;
+    }
+
+    function closeModal(){
+      modal.style.display = "none";
+      modalFrame.srcdoc = "";
+    }
+
+    window.onclick = function(e){
+      if(e.target === modal){ closeModal(); }
+      if(e.target === document.getElementById("profileModal")){ toggleProfileModal(false); }
+      if(e.target === document.getElementById("onlineModal")){ toggleOnlineModal(false); }
+      
+      // Сыртқы аймақты басқанда Мәзір тізімін жабу
+      if (!desktopMenuBtn.contains(e.target) && !desktopDropdown.contains(e.target)) {
+        desktopDropdown.classList.remove("show");
+        menuArrow.style.transform = "rotate(0deg)";
+      }
+    }
+
+    // PAGES CONTENT
+    const homePage = `<html><body style="background:#020617;color:white;font-family:sans-serif;padding:40px"><h1 style="font-size:50px;color:#facc15">Сабақ жоспары</h1><p style="font-size:24px;margin-top:30px">Мұнда робототехника сабағы жалпы қалай жұмыс істейтінімен таныса аласың!</p><iframe width="100%" height="400" src="https://docs.google.com/document/d/1FMNrkJrQ9F_RuIn-qeFCUmGGa-yQfArMl04AakPKjb4/edit?usp=sharing" style="margin-top:40px;border:none;border-radius:20px"></iframe></body></html>`;
+    const lessonPage = `<html><body style="background:#020617;color:white;font-family:sans-serif;padding:40px"><h1 style="font-size:50px;color:#38bdf8">Бастапқы робототехника</h1><p style="font-size:22px;margin-top:30px">Бұл бөлімде ең алғашқы LEGO роботтарын жасауды үйренесің.</p><iframe width="100%" height="400" src="https://docs.google.com/document/d/1Y3cdFFtHkesJ_p2qSIf8Qe3NhvS-C8Y856A8xlLUP5Q/edit?usp=sharing" style="margin-top:40px;border:none;border-radius:20px"></iframe></body></html>`;
+    const appPage = `<html><body style="background:#111827;color:white;font-family:sans-serif;padding:40px"><h1 style="font-size:50px;color:#facc15">Power Box</h1><p style="font-size:22px;margin-top:30px">Мұнда роботты бағдарламалауға арналған мобильді қосымшаны орната аласың,орнатар алдында ескерте кетейін қолданба Қытай тілінде әзірге алдағы уақытта орыс,қазақ тілдеріне аударудамыз.</p><iframe width="100%" height="400" src="http://appstore.3mcloud.cc/powerbox/index.html" style="margin-top:40px;border:none;border-radius:20px"></iframe></body></html>`;
+    const programPage = `<html><body style="background:#020617;color:white;font-family:sans-serif;padding:40px"><h1 style="font-size:50px;color:#38bdf8">Бағдарламалау ережелерімен таныса аласың.</h1><p style="font-size:22px;margin-top:30px">Балаларға арналған жеңіл Scratch бағдарламалау ережелері.</p><iframe src="https://docs.google.com/document/d/1gtMmvCVrMK8e3G2CByICZckG4lJRADSJhFKE8XcFWuE/edit?usp=sharing" width="100%" height="500" style="margin-top:40px;border:none;border-radius:20px"></iframe></body></html>`;
+    const guidePage = `<html><body style="background:#111827;color:white;font-family:sans-serif;padding:40px"><h1 style="font-size:50px;color:#facc15">LEGO Ережелер</h1><div style="font-size:22px;line-height:50px;margin-top:40px"><p>• Құрылғы бөлшектерін жоғалтпау.</p><p>• Роботты дұрыс жина.</p><p>• Роботты жинақы әрі тез бітіруге тырыс.</p><p>• Сабақ соңында барлығын орынына дұрыс қоылуын қадағала.</p></div></body></html>`;
+    const extraLessonPage = `<html><body style="background:#020617;color:white;font-family:sans-serif;padding:40px"><h1 style="font-size:50px;color:#38bdf8">Сабақ тақырыптары</h1><iframe width="100%" height="400" src="https://docs.google.com/document/d/1V5ptO6cd7-SSGdWRJfyA3wLcYKYd7l3WQVL_fDDjYRo/edit?usp=sharing" style="margin-top:40px;border:none;border-radius:20px"></iframe></body></html>`;
+    const rulesPage = `<html><body style="background:#0f172a;color:white;font-family:sans-serif;padding:40px"><h1 style="font-size:50px;color:#facc15">САЙТ ЕРЕЖЕЛЕРІ</h1><div style="font-size:24px;line-height:60px;margin-top:40px"><p> </p>1.Құпиясөзді ұмытпау және ешкімге бермеу.<p>2. Ютуб сілтемелерді ешкімге бермеу</p><p>3. Робототехника құралдарын өз бетінше пайдалану </p><p>4. Арнайы конференцияларда тыныштық сақтамау.</p><p>5. Сабаққа фокус қою.</p></div></body></html>`;
+    const projectOne = `<html><body style="background:#111827;color:white;font-family:sans-serif;padding:40px"><h1 style="font-size:50px;color:#facc15">Робот құрастыру нұсқаулығы</h1><iframe width="100%" height="400" src="file:///C:/Users/user/Downloads/Robo%20Lego%20Education%20%D0%90%D0%BB%D2%93%D0%B0%D1%88%D2%9B%D1%8B%209%20%D1%80%D0%BE%D0%B1%D0%BE%D1%82.pdf" style="margin-top:40px;border:none;border-radius:20px"></iframe></body></html>`;
+    const projectTwo = `<html><body style="background:#020617;color:white;font-family:sans-serif;padding:40px"><h1 style="font-size:50px;color:#38bdf8">Мына форумды толтырыңыз</h1><iframe width="100%" height="400" src="https://docs.google.com/forms/d/e/1FAIpQLSedREUTPNptT4SN_A4GMn0-zGzyaNq9DzTcoPbKLNtydnIpiw/viewform?usp=publish-editor" style="margin-top:40px;border:none;border-radius:20px"></iframe></body></html>`;
+  </script>
+</body>
+</html>
