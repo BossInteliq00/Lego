@@ -319,7 +319,7 @@
         <div class="grid md:grid-cols-4 gap-8">
           <div class="glass rounded-[30px] p-8 text-center card-hover">
             <div class="text-6xl">📘</div>
-            <h3 class="text-2xl font-bold mt-6">Нұсқаулық</h3>
+            <h3 class="text-2xl font-bold mt-6">Құпиялық</h3>
             <button onclick="openModal(guidePage)" class="mt-6 bg-blue-500 px-6 py-3 rounded-2xl font-bold">Ашу</button>
           </div>
           <div class="glass rounded-[30px] p-8 text-center card-hover">
@@ -574,7 +574,120 @@
     }
 
     // PAGES CONTENT
-    const homePage = `<html><body style="background:#020617;color:white;font-family:sans-serif;padding:40px"><h1 style="font-size:50px;color:#facc15">Сабақ жоспары</h1><p style="font-size:24px;margin-top:30px">Мұнда робототехника сабағы жалпы қалай жұмыс істейтінімен таныса аласың!</p><iframe width="100%" height="400" src="https://docs.google.com/document/d/1FMNrkJrQ9F_RuIn-qeFCUmGGa-yQfArMl04AakPKjb4/edit?usp=sharing" style="margin-top:40px;border:none;border-radius:20px"></iframe></body></html>`;
+    const homePage = `<html><body style="background:#020617;color:white;font-family:sans-serif;padding:40px"><h1 style="font-size:50px;color:#facc15">Сабақ жоспары</h1><p style="font-size:24px;margin-top:30px"><article style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.7; color: #FFFFFF; max-width: 900px; margin: 0 auto; padding: 25px;">
+
+    <h1 style="color: #FFD700; text-align: center; font-size: 2.2em; margin-bottom: 10px;">🧱 Сяоксин құрылыс блоктары: С сериялы робототехника курсының 1 айлық сабақ жоспары</h1>
+    
+    <p style="font-size: 1.15em; text-align: center; color: #FFFFFF; opacity: 0.9; margin-bottom: 30px;">
+        Сәлем! Сяоксин құрылыс блоктары мен С типтегі қашықтан басқару құралына негізделген 1 айлық қызықты әрі қарапайым сабақ жоспарына қош келдіңіз. Бұл бағдарлама балаларға робототехниканы күрделі терминдерсіз, ойын және шығармашылық арқылы жеңіл үйретуге арналған.
+    </p>
+
+    <div style="background-color: #222; border-left: 6px solid #FFD700; padding: 20px; border-radius: 6px; margin: 30px 0;">
+        <h3 style="color: #FFD700; margin-top: 0; font-size: 1.3em;">🏆 Маңызды хабарландыру:</h3>
+        <p style="margin-bottom: 0; font-size: 1.05em;">
+            Сабақ барысында балаларға үнемі мотивация беріп отыру қажет, өйткені курс аяқталғанда <strong>Атырау қаласы бойынша робототехникадан үлкен жарыстар өтеді!</strong> Сабақтардың басты мақсаты — балаларды тек құрастыруға ғана емес, осы Атыраудағы турнирде топ жаруға дайындау.
+        </p>
+    </div>
+
+    <hr style="border: 0; height: 1px; background: #FFD700; margin: 40px 0;">
+
+    <h2 style="color: #FFD700; border-bottom: 2px solid #FFD700; padding-bottom: 5px;">📅 1-апта: Роботпен танысу және қуат көзі</h2>
+    <p style="font-style: italic; color: #FFD700;">🎯 Мақсаты: Робототехниканың негізгі бөлшектерін түсіну және техникалық қауіпсіздікті үйрену.</p>
+    
+    <div style="margin-left: 15px; margin-bottom: 30px;">
+        <h3 style="color: #FFFFFF;">🤖 1-сабақ: Робототехника әлеміне қадам</h3>
+        <p>• <strong>Теория:</strong> Робот деген не? Қарапайым тілмен түсіндіру. Сяоксин құрылыс блоктарымен танысу.</p>
+        <p>• <strong>Тәжірибе:</strong> Блоктарды бір-біріне еркін бекіту, қиялдан кішігірім фигуралар құрастыру.</p>
+
+        <h3 style="color: #FFFFFF; margin-top: 20px;">🔋 2-сабақ: Роботты «тірілту» — Батарея және Қауіпсіздік</h3>
+        <p>• <strong>Теория:</strong> Тұтқаның (пульттің) артқы қақпағын ашып, батареяларды орнатуды үйрену.</p>
+        <p>• <strong>Техникалық параметрлер:</strong> Батарея қорабына 6 дана АА батареясы, ал басқару құрылғысына (пультке) 2 дана АА батареясы салынатынын түсіндіру.</p>
+        
+        <div style="background-color: #ff4d4d; color: #FFFFFF; padding: 12px; border-radius: 4px; margin-top: 15px; font-weight: bold;">
+            ⚠️ Мұғалім назарына: Балаларға Nanfu/Yiyuan батареяларын пайдалануға болмайтынын және жаңа мен ескі батареяларды араластыруға шектеу қойылғанын қатаң ескерту.
+        </div>
+    </div>
+
+    <h2 style="color: #FFD700; border-bottom: 2px solid #FFD700; padding-bottom: 5px; margin-top: 40px;">📅 2-апта: Смартфонмен байланыс және алғашқы басқару</h2>
+    <p style="font-style: italic; color: #FFD700;">🎯 Мақсаты: Мобильді қосымшаны (АПП) меңгеру және роботты қозғалысқа келтіру.</p>
+    
+    <div style="margin-left: 15px; margin-bottom: 30px;">
+        <h3 style="color: #FFFFFF;">📲 3-сабақ: Қосымшаны баптау</h3>
+        <p>• <strong>Теория:</strong> Мобильді қосымшаны жүктеп алу. Оң жақ жоғарғы бұрыштан тілді реттеу. Оңға қарай сырғыту арқылы бізге қажетті «С сериясын» табу.</p>
+        <p>• <strong>Тәжірибе:</strong> Телефон мен роботты байланыстыру (Bluetooth арқылы).</p>
+
+        <h3 style="color: #FFFFFF; margin-top: 20px;">🕹️ 4-сабақ: Роботты жүргізу (Драйв режимі)</h3>
+        <p>• <strong>Теория:</strong> Тиісті режимді ашып, батырмалардың қызметін түсіну.</p>
+        <p>• <strong>Тәжірибе:</strong> Роботты алға, артқа, оңға, солға бұру. Кедергілерден айналып өту жаттығулары.</p>
+    </div>
+
+    <h2 style="color: #FFD700; border-bottom: 2px solid #FFD700; padding-bottom: 5px; margin-top: 40px;">📅 3-апта: Қашықтықтан бағдарламалау (Еркін шығармашылық)</h2>
+    <p style="font-style: italic; color: #FFD700;">🎯 Мақсаты: Тәуелсіз модуль арқылы роботқа өздігінен шешім қабылдауды үйрету.</p>
+    
+    <div style="margin-left: 15px; margin-bottom: 30px;">
+        <h3 style="color: #FFFFFF;">👨‍💻 5-сабақ: Мен — Бағдарламашымын!</h3>
+        <p>• <strong>Теория:</strong> Қашықтықтан бағдарламалау — бұл ешқандай шектеусіз, өз режиміңді еркін жобалауға мүмкіндік беретін тәуелсіз модуль екенін түсіндіру.</p>
+        <p>• <strong>Тәжірибе:</strong> Роботқа бекітілген әдіссіз, өз қиялымен алгоритм жазу (мысалы: 3 қадам алға жүріп, дыбыс шығару).</p>
+
+        <h3 style="color: #FFFFFF; margin-top: 20px;">⚙️ 6-сабақ: Роботтың сипатына қарай бағдарламаны реттеу</h3>
+        <p>• <strong>Теория:</strong> Құрастырылған белгілі бір роботтың (машина, танк немесе адам тәріздес) құрылымына байланысты бағдарламаны ыңғайлы әрі толық түсініп барып жасауды үйрену.</p>
+        <p>• <strong>Тәжірибе:</strong> Роботтың негізгі бағдарламалау параметрлерінің диаграммасымен жұмыс істеу.</p>
+    </div>
+
+    <h2 style="color: #FFD700; border-bottom: 2px solid #FFD700; padding-bottom: 5px; margin-top: 40px;">📅 4-апта: Жарысқа дайындық және Финал (Атырау турнирі)</h2>
+    <p style="font-style: italic; color: #FFD700;">🎯 Мақсаты: Өз өнімін қорғау және Атырау қалалық жарысының ережелеріне бейімделу.</p>
+    
+    <div style="margin-left: 15px; margin-bottom: 30px;">
+        <h3 style="color: #FFFFFF;">🏁 7-сабақ: Жарыс симуляциясы (Сынақ)</h3>
+        <p>• <strong>Теория:</strong> Атырауда өтетін робототехника жарысының талаптарын талқылау (жылдамдық, дәлдік, шығармашылық).</p>
+        <p>• <strong>Тәжірибе:</strong> Уақытқа роботты бағдарламалау және басқару. Қателіктермен жұмыс.</p>
+
+        <h3 style="color: #FFFFFF; margin-top: 20px;">🥇 8-сабақ: Курс финалы — Ішкі турнир</h3>
+        <p>• <strong>Практика:</strong> Балалар өздері құрастырған және бағдарламалаған бірегей модельдерін ортаға салады.</p>
+        <p>• <strong>Қорытынды:</strong> Ең үздік, тапқыр және жылдам роботтар анықталып, Атырау қаласындағы үлкен жарысқа жолдама алады!</p>
+    </div>
+
+    <hr style="border: 0; height: 1px; background: #FFD700; margin: 40px 0;">
+
+    <h2 style="color: #FFD700; text-align: center; margin-bottom: 20px;">📊 Сабақ жоспарының қысқаша кестесі</h2>
+    
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0; color: #FFFFFF; border: 1px solid #FFD700;">
+        <thead>
+            <tr style="background-color: #222; border-bottom: 2px solid #FFD700;">
+                <th style="padding: 12px; text-align: left; color: #FFD700; width: 15%;">Апта</th>
+                <th style="padding: 12px; text-align: left; color: #FFD700; width: 40%;">Тақырыптық бағыты</th>
+                <th style="padding: 12px; text-align: left; color: #FFD700; width: 45%;">Үйренетін басты дағдысы</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; font-weight: bold;">1-апта</td>
+                <td style="padding: 12px;">Роботпен танысу және Қуат көзі</td>
+                <td style="padding: 12px;">Батареяларды қауіпсіз және дұрыс орнату</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; font-weight: bold;">2-апта</td>
+                <td style="padding: 12px;">Мобильді қолданба (АПП)</td>
+                <td style="padding: 12px;">С сериясын тауып, роботты смартфонмен байланыстыру</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; font-weight: bold;">3-апта</td>
+                <td style="padding: 12px;">Еркін бағдарламалау</td>
+                <td style="padding: 12px;">Ешқандай шектеусіз, өз моделіне арнап режим жобалау</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; font-weight: bold;">4-апта</td>
+                <td style="padding: 12px;">Атырау жарысына дайындық</td>
+                <td style="padding: 12px;">Жылдамдық пен тапқырлыққа бағытталған финалдық сынақ</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p style="text-align: center; font-size: 1.1em; color: #FFD700; font-weight: bold; margin-top: 35px;">
+        🚀 Бұл жоспар балалардың техникалық ойлау қабілетін дамытып, Атырауда өтетін алдағы жарыста жеңіске жетуіне үлкен септігін тигізеді!
+    </p>
+
+</article></body></html>`;
     const lessonPage = `<html><body style="background:#020617;color:white;font-family:sans-serif;padding:40px"><h1 style="font-size:50px;color:#38bdf8">Бастапқы робототехника</h1><p style="font-size:22px;margin-top:30px">Бұл бөлімде ең алғашқы LEGO роботтарын жасауды үйренесің.</p><iframe width="100%" height="400" src="https://docs.google.com/document/d/1Y3cdFFtHkesJ_p2qSIf8Qe3NhvS-C8Y856A8xlLUP5Q/edit?usp=sharing" style="margin-top:40px;border:none;border-radius:20px"></iframe></body></html>`;
    const appPage = `
 <html>
@@ -594,10 +707,400 @@
 </body>
 </html>
 `;
-    const programPage = `<html><body style="background:#020617;color:white;font-family:sans-serif;padding:40px"><h1 style="font-size:50px;color:#38bdf8">Бағдарламалау ережелерімен таныса аласың.</h1><p style="font-size:22px;margin-top:30px">Балаларға арналған жеңіл Scratch бағдарламалау ережелері.</p><iframe src="https://docs.google.com/document/d/1gtMmvCVrMK8e3G2CByICZckG4lJRADSJhFKE8XcFWuE/edit?usp=sharing" width="100%" height="500" style="margin-top:40px;border:none;border-radius:20px"></iframe></body></html>`;
-    const guidePage = `<html><body style="background:#111827;color:white;font-family:sans-serif;padding:40px"><h1 style="font-size:50px;color:#facc15">LEGO Ережелер</h1><div style="font-size:22px;line-height:50px;margin-top:40px"><p>• Құрылғы бөлшектерін жоғалтпау.</p><p>• Роботты дұрыс жина.</p><p>• Роботты жинақы әрі тез бітіруге тырыс.</p><p>• Сабақ соңында барлығын орынына дұрыс қоылуын қадағала.</p></div></body></html>`;
-    const extraLessonPage = `<html><body style="background:#020617;color:white;font-family:sans-serif;padding:40px"><h1 style="font-size:50px;color:#38bdf8">Сабақ тақырыптары</h1><iframe width="100%" height="400" src="https://docs.google.com/document/d/1V5ptO6cd7-SSGdWRJfyA3wLcYKYd7l3WQVL_fDDjYRo/edit?usp=sharing" style="margin-top:40px;border:none;border-radius:20px"></iframe></body></html>`;
-    const rulesPage = `<html><body style="background:#0f172a;color:white;font-family:sans-serif;padding:40px"><h1 style="font-size:50px;color:#facc15">САЙТ ЕРЕЖЕЛЕРІ</h1><div style="font-size:24px;line-height:60px;margin-top:40px"><p> </p>1.Құпиясөзді ұмытпау және ешкімге бермеу.<p>2. Ютуб сілтемелерді ешкімге бермеу</p><p>3. Робототехника құралдарын өз бетінше пайдалану </p><p>4. Арнайы конференцияларда тыныштық сақтамау.</p><p>5. Сабаққа фокус қою.</p></div></body></html>`;
+    const programPage = `<html><body style="background:#020617;color:white;font-family:sans-serif;padding:40px"><h1 style="font-size:50px;color:#38bdf8">Бағдарламалау ережелерімен таныса аласың.</h1><p style="font-size:22px;margin-top:30px"><article style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #FFD700; max-width: 800px; margin: 0 auto; padding: 20px;">
+
+    <h1 style="color: #FFD700; text-align: center;">🤖 Робототехника және Бағдарламалау: Сәтті Код Жазудың Алтын Ережелері</h1>
+    <p style="font-size: 1.1em; text-align: center; color: #FFF; opacity: 0.9;">Роботты бағдарламалау — тек код жазу емес, бұл механика мен логиканың өзара үйлесімі. Жарыстарда немесе қарапайым тапсырмаларды орындау кезінде роботтың қатесіз жұмыс істеуі үшін бағдарламаның құрылымы өте маңызды. Төменде роботты тиімді бағдарламалаудың негізгі қадамдары мен практикалық нұсқаулықтары берілген.</p>
+    
+    <hr style="border: 0; height: 1px; background: #FFD700; margin: 30px 0;">
+
+    <h2>🔍 1. Бастапқы дайындық және Нақтылық</h2>
+    <p>Кез келген сәтті жоба мұқият жоспарлаудан басталады. Роботты іске қоспас бұрын келесі екі маңызды қадамды әдетке айналдырыңыз:</p>
+    
+    <h3>🔌 Порттарды нақты анықтау</h3>
+    <p>Код жазуға кіріспес бұрын, ең алдымен аппараттық құралдардың қосылуын тексеріп алыңыз. Қай мотордың немесе сенсордың хабтағы (блоктағы) қай портқа (<strong>A, B, C, D</strong> немесе <strong>1, 2, 3, 4</strong>) қосылып тұрғанын екі рет қайталап тексеріңіз.</p>
+    
+    <blockquote style="background: #333; border-left: 5px solid #FFD700; margin: 1.5em 10px; padding: 0.5em 10px; color: #FFF;">
+        <strong>⚠️ Маңызды ескерту:</strong> Тәжірибеде роботтың жұмыс істемей қалуының немесе мүлдем басқа бағытқа кетіп қалуының <strong>80% себебі</strong> — кодтағы порттардың шынайы қосылымдармен сәйкес келмеуінен болады.
+    </blockquote>
+
+    <h3>⚙️ Бастапқы күйді орнату (Initialization)</h3>
+    <p>Бағдарламаның ең алғашқы блогында роботтың бастапқы параметрлерін міндетті түрде бекітіп алыңыз. Оған мына маңызды баптаулар жатады:</p>
+    <ul>
+        <li>🚀 Роботтың негізгі қозғалыс жылдамдығы;</li>
+        <li>🔄 Бұрылу радиусы мен инерция коэффициенті;</li>
+        <li>🧹 Сенсорлардың бастапқы көрсеткіштерін нөлге түсіру (Reset).</li>
+    </ul>
+    <p>Бұл қадам робот әр рет іске қосылған сайын ескі мәліметтер мен қателерді өшіріп, бағдарламаны <em>«таза парақтан»</em> бастауға көмектеседі.</p>
+
+    <hr style="border: 0; height: 1px; background: #FFD700; margin: 30px 0;">
+
+    <h2>🧩 2. Кодтың Тиімділігі мен Құрылымы</h2>
+    <p>Таза және жүйелі жазылған код — тек сіздің емес, командаңыздың да уақытын үнемдейді. Кодтың сапасын арттыру үшін мына ережелерді сақтаңыз:</p>
+
+    <h3>🔁 Циклдарды (Loops) орынды қолдану</h3>
+    <p>Егер робот бір әрекетті бірнеше рет қайталауы керек болса (мысалы, квадрат бойымен жүру немесе қабырғаны айналып өту), бірнеше блоктарды қайталап көшіруден (Copy-Paste) аулақ болыңыз. Оның орнына <strong>шексіз циклдарды</strong> немесе <strong>шартты циклдарды (While/Until)</strong> пайдаланыңыз. Бұл кодтың көлемін азайтып, оның жылдам жұмыс істеуін қамтамасыз етеді.</p>
+
+    <h3>📦 Кодты блоктарға бөлу (Modular programming)</h3>
+    <p>Экранның бір шетінен екінші шетіне дейін созылып жатқан ұзын, көлемді кодтардан қашыңыз. Үлкен бағдарламаны кішкентай, түсінікті «Миссияларға» немесе өз функцияларыңызға (<strong>My Blocks / Өз блоктарым</strong>) бөліп тастаңыз.</p>
+    <p>💡 <em>Мысалы: <code>Сызықпен_жүру()</code>, <code>Қорапты_көтеру()</code>, <code>90_градусқа_бұрылу()</code>.</em> Бұл әдіс код ішінен қате іздегенде (debugging) өте ыңғайлы әрі жеңіл болады.</p>
+
+    <h3>📝 Түсініктемелер (Comments) қалдыру</h3>
+    <p>Кодтың әрбір маңызды бұрылысына немесе логикалық блогына қысқаша түсініктеме мәтіндерін жазып кетіңіз. Мысалы: <text style="color: #4AF626; font-style: italic;">// Бұл жерде ультрадыбыстық сенсор қабырғаға дейін 10 см қалғанын тексереді</text>. Бұл әдет сіз бір аптадан кейін өз кодыңызға қайта оралғанда, оның қалай жұмыс істетінін бірден түсінуге көмектеседі.</p>
+
+    <hr style="border: 0; height: 1px; background: #FFD700; margin: 30px 0;">
+
+    <h2>📊 3. Сенсорлармен және Механикамен жұмыс</h2>
+    <p>Роботтың сыртқы ортаны сезуі мен оған физикалық түрде әрекет етуі үлкен дәлдікті талап етеді.</p>
+
+    <h3>🎯 Сенсорларды калибрлеу</h3>
+    <p>Түс (Color) немесе гироскопиялық (Gyro) сенсорларды қолданбас бұрын оларды міндетті түрде калибрлеңіз. Түс сенсоры бөлменің жарықтығына қатты тәуелді. Жарық сәл өзгерсе, сенсордың да мәндері өзгереді. Сондықтан жарықтың ең қараңғы және ең жарық нүктелерін кодқа алдын ала енгізіп қойыңыз.</p>
+
+    <h3>📉 Жылдамдықты бақылау</h3>
+    <p>Роботты ешқашан бірден 100% максималды жылдамдыққа қоймаңыз. Жоғары жылдамдықта <strong>инерция күші</strong> іске қосылып, робот бұрылыстан шығып кетеді, сызықты жоғалтады немесе нысандарды қағып құлатады. Робототехникадағы ең оңтайлы әрі дәл жұмыс жылдамдығы — <strong>30% және 50% аралығы</strong>.</p>
+
+    <h3>🛑 Бірқалыпты тоқтау түрлері</h3>
+    <p>Моторды тоқтатудың екі негізгі режимі бар. Оларды дұрыс таңдау механикалық бөлшектердің ұзақ қызмет етуіне тікелей әсер етеді:</p>
+
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0; color: #FFF; border: 1px solid #FFD700;">
+        <thead>
+            <tr style="background-color: #222; border-bottom: 2px solid #FFD700;">
+                <th style="padding: 12px; text-align: left; color: #FFD700;">Тоқтау режимі</th>
+                <th style="padding: 12px; text-align: left; color: #FFD700;">Сипаттамасы</th>
+                <th style="padding: 12px; text-align: left; color: #FFD700;">Қолданылатын жері</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; font-weight: bold;">🛑 Brake (Кілт тоқтау)</td>
+                <td style="padding: 12px;">Моторды бірден бұғаттайды. Робот дәл орнында кілт тұрып қалады.</td>
+                <td style="padding: 12px;">Үлкен дәлдік керек жерде (мысалы, сызықтың соңында).</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; font-weight: bold;">🍃 Coast (Еркін айналу)</td>
+                <td style="padding: 12px;">Тоқты өшіреді, робот инерциямен баяулап барып тоқтайды.</td>
+                <td style="padding: 12px;">Шестеренкалардың (тісті дөңгелектердің) өмірін ұзарту үшін.</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="background-color: #222; color: #FFD700; padding: 15px; border-radius: 5px; margin: 30px 0; border-left: 6px solid #FFD700;">
+        <strong>💡 АЛТЫН ЕРЕЖЕ:</strong> Кодты толық жазып бітірмей тұрып, үлкен сынақ жасамаңыз! Әрбір жазылған кішкентай қадамды (мысалы, тек 90 градусқа бұрылуды немесе 20 см алға жүруді) бөлек-бөлек тестілеп, қатесін бірден түзетіп отырыңыз.
+    </div>
+
+    <hr style="border: 0; height: 1px; background: #FFD700; margin: 30px 0;">
+
+    <h2>🛠 Тәжірибелік Бөлім: Іске Асыру Нұсқаулықтары</h2>
+
+    <h3>📍 1. Сызықпен жүру кодының үлгісі (Релейлік реттегіш)</h3>
+    <p>Екі түс сенсоры немесе бір түс сенсоры арқылы қара сызықтың жиегімен жүру — ең көп таралған тапсырма. Төменде қарапайым релейлік алгоритмнің логикалық құрылымы берілген:</p>
+    
+    <pre style="background: #222; border: 1px solid #FFD700; padding: 15px; border-radius: 4px; overflow-x: auto; font-family: monospace; color: #FFF;">
+<strong>ЕГЕР</strong> (Түс сенсорының мәні &lt; 50) <strong>БОЛСА:</strong>
+    Онда: Сол жақ моторды тоқтату, Оң жақ моторды іске қосу (Солға бұрылу)
+<strong>ӘЙТПЕСЕ:</strong>
+    Онда: Оң жақ моторды тоқтату, Сол жақ моторды іске қосу (Оңға бұрылу)</pre>
+    <p>📌 <em>Бұл код роботқа қара сызықты жоғалтпай, оның жиегімен ирек тәрізді қозғалыспен алға жылжуға мүмкіндік береді.</em></p>
+
+    <h3>📋 2. Қателерді іздеу парақшасы (Debugging Checklist)</h3>
+    <p>Роботыңыз дұрыс жұмыс істемей қалса, бірден кодты өшіруге асықпаңыз. Мына чек-парақша бойынша тексеріп шығыңыз:</p>
+    <ul style="list-style-type: none; padding-left: 0;">
+        <li style="margin-bottom: 10px;">🔋 <strong>Қорек көзі:</strong> Батарея заряды 70%-дан жоғары ма? (Төмен зарядта моторлар баяу айналады).</li>
+        <li style="margin-bottom: 10px;">🔌 <strong>Порттар:</strong> Кабельдер тиісті ұяшықтарға (A, B, 1, 2) соңына дейін сұғылған ба?</li>
+        <li style="margin-bottom: 10px;">🔩 <strong>Механика:</strong> Дөңгелектер немесе шестеренкалар бір-берине қысылып, кептеліп қалмаған ба?</li>
+        <li style="margin-bottom: 10px;">🧭 <strong>Калибрлеу:</strong> Гироскоп робот мүлдем қозғалмай тұрғанда іске қосылды ма? (Қозғалып тұрып қосылса, қате мән көрсетеді).</li>
+    </ul>
+
+    <h3>🏗 3. Өз блоктарыңды (My Blocks) жасауды үйрену</h3>
+    <p>Кодты оңтайландырудың ең үздік жолы — жеке функциялар құру. Мысалы, робот жиі қайталайтын бұрылысты бір блокқа сыйғызуға болады:</p>
+    <ol style="padding-left: 20px;">
+        <li style="margin-bottom: 8px;"><strong>Блокты құру:</strong> Бағдарламалау ортасынан "Make a Block" (Блок жасау) батырмасын таңдаңыз.</li>
+        <li style="margin-bottom: 8px;"><strong>Атау беру:</strong> Оған түсінікті атау беріңіз, мысалы: <code>Оңға_90_Градус</code>.</li>
+        <li style="margin-bottom: 8px;"><strong>Параметр қосу:</strong> Жылдамдық пен бұрышты енгізетін арнайы айнымалы сызықшаларын үстеңіз.</li>
+        <li style="margin-bottom: 8px;"><strong>Логиканы бекіту:</strong> Бұл блоктың ішіне моторлардың қалай әрекет ететінін (Сол мотор алға, оң мотор артқа) бір рет жазып қойыңыз.</li>
+    </ol>
+    <p>🚀 Енді негізгі бағдарламада ұзын кодтың орнына тек өзіңіз жасаған жалғыз <code>Оңға_90_Градус</code> блогын қоя саласыз. Бұл кодты өте көрнекі, таза әрі кәсіби етеді!</p>
+
+</article></body></html>`;
+    const guidePage = `<html><body style="background:#111827;color:white;font-family:sans-serif;padding:40px"><article style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.7; color: #FFFFFF; max-width: 900px; margin: 0 auto; padding: 25px;">
+
+    <h1 style="color: #FFD700; text-align: center; font-size: 2.2em; margin-bottom: 10px;">🔒 Құпиялық саясаты</h1>
+    <p style="font-size: 1em; text-align: center; color: #FFFFFF; opacity: 0.7; margin-bottom: 30px;">Соңғы жаңартылған күні: 2026 жыл, мамыр</p>
+    
+    <p style="font-size: 1.1em; margin-bottom: 25px;">
+        Біздің робототехника мектебіміз пайдаланушылардың (ата-аналар мен балалардың) жеке деректерінің қауіпсіздігіне үлкен жауапкершілікпен қарайды. Осы Құпиялық саясаты веб-сайтты пайдалану барысында қандай ақпараттар жиналатынын және олардың қалай қорғалатынын түсіндіреді.
+    </p>
+
+    <hr style="border: 0; height: 1px; background: #FFD700; margin: 30px 0;">
+
+    <h2 style="color: #FFD700; font-size: 1.5em; border-bottom: 1px solid #444; padding-bottom: 5px;">1. Қандай деректерді жинаймыз?</h2>
+    <p>Сіз біздің сайтта курсқа жазылу, кері байланыс алу немесе Телеграм арнамызға өту мақсатында өтінім қалдырған кезде келесі ақпараттарды сұрауымыз мүмкін:</p>
+    <ul>
+        <li>👤 Ата-ананың аты-жөні;</li>
+        <li>📞 Байланыс телефоны (WhatsApp/Telegram үшін);</li>
+        <li>👶 Баланың аты-жөні және жасы (сабақ тобын дұрыс анықтау үшін);</li>
+        <li>📧 Электрондық пошта мекенжайы (қажет болған жағдайда).</li>
+    </ul>
+
+    <h2 style="color: #FFD700; font-size: 1.5em; border-bottom: 1px solid #444; padding-bottom: 5px; margin-top: 30px;">2. Деректерді не үшін пайдаланамыз?</h2>
+    <p>Жиналған ақпараттар тек келесі мақсаттарда ғана қолданылады:</p>
+    <ul>
+        <li>🛠️ Сяоксин робототехника курстарына және Атырау қалалық жарыстарына қатысушыларды ресми тіркеу;</li>
+        <li>📅 Сабақ кестесінің өзгеруі немесе Телеграмдағы маңызды түсіндірме жұмыстары туралы ата-аналарға хабарлау;</li>
+        <li>🏆 Атырау турниріне қатысу үшін өтінімдерді рәсімдеу;</li>
+        <li>💬 Сіздің сұрақтарыңызға уақытылы жауап беру және техникалық қолдау көрсету.</li>
+    </ul>
+
+    <h2 style="color: #FFD700; font-size: 1.5em; border-bottom: 1px solid #444; padding-bottom: 5px; margin-top: 30px;">3. Деректерді қорғау және үшінші тұлғаларға бермеу</h2>
+    <p>Біз сіздің жеке мәліметтеріңіздің құпиялылығын қатаң сақтаймыз. Сіздің келісіміңізсіз жеке деректеріңіз ешқандай үшінші тұлғаларға сатылмайды, жалға берілмейді және бөлісілмейді.</p>
+    <p>💡 <em>Ерекшелік:</em> Тек Атырау қалалық ресми робототехника жарыстарына қатысу кезінде ұйымдастырушылар тарапынан баланың аты-жөні мен жасы туралы мәлімет талап етілсе, жарыс ережесіне сай ұсынылуы мүмкін.</p>
+
+    <h2 style="color: #FFD700; font-size: 1.5em; border-bottom: 1px solid #444; padding-bottom: 5px; margin-top: 30px;">4. Фото және видео материалдарды пайдалану</h2>
+    <p>Сабақ барысында, балалар Сяоксин блоктарымен жұмыс істеп жатқанда немесе ішкі турнирлер кезінде естелік фото және видео есептер жүргізілуі мүмкін. Бұл материалдар курстың жетістіктерін көрсету мақсатында біздің сайтта немесе әлеуметтік желілерде (Телеграм, Инстаграм) жариялануы мүмкін. Егер сіз балаңыздың фото/видеоға түсуіне қарсы болсаңыз, бізге алдын ала хабарлауыңызды сұраймыз.</p>
+
+    <h2 style="color: #FFD700; font-size: 1.5em; border-bottom: 1px solid #444; padding-bottom: 5px; margin-top: 30px;">5. Сіздің құқықтарыңыз</h2>
+    <p>Әрбір ата-ана өзінің немесе баласының жеке деректерін өзгертуге, жаңартуға немесе біздің базадан толықтай өшіруді талап етуге құқылы. Ол үшін біздің байланыс нөмірлерімізге немесе Телеграм арнамыздағы әкімшіге жазу жеткілікті.</p>
+
+    <h2 style="color: #FFD700; font-size: 1.5em; border-bottom: 1px solid #444; padding-bottom: 5px; margin-top: 30px;">6. Келісім</h2>
+    <p>Біздің веб-сайтты пайдалану және өтінім қалдыру арқылы сіз осы Құпиялық саясатының шарттарымен толықтай келісетініңізді растайсыз.</p>
+
+    <div style="background-color: #222; border: 1px solid #FFD700; padding: 15px; border-radius: 6px; margin-top: 35px; text-align: center;">
+        <p style="margin: 0; font-size: 1.1em; color: #FFD700; font-weight: bold;">
+            📱 Сұрақтар бойынша байланыс:
+        </p>
+        <p style="margin: 5px 0 0 0; color: #FFFFFF;">
+            Барлық сұрақтар мен ұсыныстар бойынша біздің Телеграм арнамыз арқылы немесе сайтта көрсетілген ресми байланыс нөмірлері бойынша хабарласа аласыз.
+        </p>
+    </div>
+
+</article></body></html>`;
+    const extraLessonPage = `<html><body style="background:#020617;color:white;font-family:sans-serif;padding:40px"><h1 style="font-size:50px;color:#38bdf8">Сабақ тақырыптары</h1><article style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.7; color: #FFFFFF; max-width: 950px; margin: 0 auto; padding: 25px;">
+
+    <div style="background-color: #222; border-left: 6px solid #FFD700; padding: 20px; border-radius: 6px; margin-bottom: 30px;">
+        <p style="margin-top: 0; font-size: 1.1em; color: #FFFFFF;">
+            📢 <strong>Маңызды ақпарат:</strong> Бұл күнтізбеден бұрын арнайы түсіндірме жұмыстары өткізіледі. Ол үшін біздің <strong>Телеграм арнамызда</strong> үнемі байланыста болыңыздар!
+        </p>
+        <p style="margin-bottom: 0; font-size: 1.1em; color: #FFD700; font-weight: bold;">
+            🔗 Әр күні сабақтың қайда болатыны және барлық қосымша мәліметтер сол жерде көрсетіліп отырады.
+        </p>
+    </div>
+
+    <h1 style="color: #FFD700; text-align: center; font-size: 2.3em; margin-bottom: 30px;">📅 31 күндік робототехника курсының толық бағдарламасы</h1>
+
+    <table style="width: 100%; border-collapse: collapse; margin: 20px 0; color: #FFFFFF; border: 1px solid #FFD700; font-size: 1.05em;">
+        <thead>
+            <tr style="background-color: #222; border-bottom: 2px solid #FFD700;">
+                <th style="padding: 15px; text-align: center; color: #FFD700; width: 10%;">Күн</th>
+                <th style="padding: 15px; text-align: left; color: #FFD700; width: 35%;">Сабақтың тақырыбы</th>
+                <th style="padding: 15px; text-align: left; color: #FFD700; width: 55%;">Мақсаты мен Практикалық тапсырмасы</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">1</td>
+                <td style="padding: 12px; font-weight: bold;">🤖 Робототехника әлеміне кіріспе</td>
+                <td style="padding: 12px;">Робот деген не? Сяоксин блоктарымен алғашқы танысу.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">2</td>
+                <td style="padding: 12px; font-weight: bold;">🧩 Блоктардың түрлері мен байланысы</td>
+                <td style="padding: 12px;">Бөлшектерді бір-біріне дұрыс және берік бекітуді үйрену.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">3</td>
+                <td style="padding: 12px; font-weight: bold;">🔋 Қуат көзі және Қауіпсіздік</td>
+                <td style="padding: 12px;">Батарея қорабына 6 АА батареясын дұрыс орнату ережесі.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">4</td>
+                <td style="padding: 12px; font-weight: bold;">🕹️ Тұтқаны (пультті) іске қосу</td>
+                <td style="padding: 12px;">Басқару құрылғысына 2 АА батареясын салу және бұрандалармен жұмыс.</td>
+            </tr>
+            <tr style="background-color: #3a1a1a; border-bottom: 1px solid #ff4d4d;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #ff4d4d;">5</td>
+                <td style="padding: 12px; font-weight: bold; color: #ff4d4d;">⚠️ Маңызды ескерту сабағы</td>
+                <td style="padding: 12px;">Nanfu/Yiyuan батареяларын қолданбау және ескі-жаңаны араластырмау ережесін жаттау.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">6</td>
+                <td style="padding: 12px; font-weight: bold;">🔑 Сырғымалы қақпақтар құпиясы</td>
+                <td style="padding: 12px;">Екі жағында сырғымалы қақпақтары бар батарея бөлімінің жұмысын меңгеру.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">7</td>
+                <td style="padding: 12px; font-weight: bold;">🏎️ Алғашқы механикалық модель</td>
+                <td style="padding: 12px;">Моторсыз, тек блоктардан жылдам қозғалатын машина құрастыру.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">8</td>
+                <td style="padding: 12px; font-weight: bold;">🧠 Смартфон — роботтың миы</td>
+                <td style="padding: 12px;">Мобильді қосымшаны (АПП) телефонға жүктеп алу және орнату.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">9</td>
+                <td style="padding: 12px; font-weight: bold;">⚙️ Қосымшаны баптау (Интерфейс)</td>
+                <td style="padding: 12px;">Жүктелген бағдарламаны ашып, жоғарғы оң жақ бұрышта қытай тіліне (немесе ыңғайлы тілге) ауыстыру.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">10</td>
+                <td style="padding: 12px; font-weight: bold;">🔍 С сериясын іздеу</td>
+                <td style="padding: 12px;">Экранды оңға қарай сырғыту арқылы бізге қажетті С сериясын табу.</td>
+            </tr>
+
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">11</td>
+                <td style="padding: 12px; font-weight: bold;">🌐 Bluetooth арқылы байланыс</td>
+                <td style="padding: 12px;">Смартфон мен С типтегі роботты өзара сымсыз байланыстыру.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">12</td>
+                <td style="padding: 12px; font-weight: bold;">🏎️ «Драйв» режимімен танысу</td>
+                <td style="padding: 12px;">Роботты қосымшадағы дайын батырмалармен алға-артқа жүргізу.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">13</td>
+                <td style="padding: 12px; font-weight: bold;">🎯 Ептілік жаттығулары</td>
+                <td style="padding: 12px;">Роботты бөлме ішіндегі кедергілерден қолмен басқарып айналып өту.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">14</td>
+                <td style="padding: 12px; font-weight: bold;">⚡ С сериясының мотор қуаты</td>
+                <td style="padding: 12px;">Роботтың жылдамдығын қолданба арқылы реттеп үйрену.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">15</td>
+                <td style="padding: 12px; font-weight: bold;">📦 Қашықтықтан бағдарламалау модулі</td>
+                <td style="padding: 12px;">Тәуелсіз модульмен танысу: Ешқандай шектеусіз еркін жобалау идеясы.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">16</td>
+                <td style="padding: 12px; font-weight: bold;">📋 Алгоритм деген не?</td>
+                <td style="padding: 12px;">Роботқа кезекпен орындалатын командалар тізбегін түсіндіру.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">17</td>
+                <td style="padding: 12px; font-weight: bold;">💻 Алғашқы бағдарламалық код</td>
+                <td style="padding: 12px;">Робот өздігінен 3 секунд алға жүріп, тоқтайтын бағдарлама жазу.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">18</td>
+                <td style="padding: 12px; font-weight: bold;">🔄 Бағдарламадағы бұрылыстар</td>
+                <td style="padding: 12px;">Роботты автоматты түрде оңға және солға бұруды бағдарламалау.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">19</td>
+                <td style="padding: 12px; font-weight: bold;">🔁 Циклдармен жұмыс (Қайталану)</td>
+                <td style="padding: 12px;">Тәуелсіз модульде бір әрекетті бірнеше рет қайталауды реттеу.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">20</td>
+                <td style="padding: 12px; font-weight: bold;">📊 Параметрлер диаграммасы</td>
+                <td style="padding: 12px;">Негізгі бағдарламалау параметрлерінің диаграммасын оқу және түсіну.</td>
+            </tr>
+
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">21</td>
+                <td style="padding: 12px; font-weight: bold;">🛠️ Белгілі бір роботқа бейімделу</td>
+                <td style="padding: 12px;">Құрастырылған модельдің (машина немесе танк) құрылымына қарай бағдарламаны ыңғайлы етіп өзгерту.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">22</td>
+                <td style="padding: 12px; font-weight: bold;">🇰🇿 «Атырау Жарыс Көлігі» моделі</td>
+                <td style="padding: 12px;">Жарысқа арналған өте жылдам әрі жинақы машина құрастыру.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">23</td>
+                <td style="padding: 12px; font-weight: bold;">📈 Машинаны бағдарламалау</td>
+                <td style="padding: 12px;">Жарыс көлігіне арналған параметрлерді диаграмма бойынша дәл реттеу.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">24</td>
+                <td style="padding: 12px; font-weight: bold;">🛡️ «Ақылды Танк» моделі</td>
+                <td style="padding: 12px;">Кедергілерді бұзып өтетін немесе айналып өтетін шынжыр табанды модель жасау.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">25</td>
+                <td style="padding: 12px; font-weight: bold;">🎮 Танкті бағдарламалау</td>
+                <td style="padding: 12px;">Танктің бұрылыстары мен маневрлерін тәуелсіз модульде бағдарламалау.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">26</td>
+                <td style="padding: 12px; font-weight: bold;">✨ Шығармашылық еркіндік</td>
+                <td style="padding: 12px;">Қиял мен шығармашылықты шектеусіз қолданып, өз бірегей роботыңды жасау.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">27</td>
+                <td style="padding: 12px; font-weight: bold;">📜 Атырау қалалық жарысының ережелері</td>
+                <td style="padding: 12px;">Жарыс талаптарын (уақыт, traссадан шықпау, тапсырманы нақты орындау) талдау.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">28</td>
+                <td style="padding: 12px; font-weight: bold;">🛣️ Трассамен жұмыс</td>
+                <td style="padding: 12px;">Сызық бойымен немесе белгіленген жолмен роботты автоматты жүргізу сынағы.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">29</td>
+                <td style="padding: 12px; font-weight: bold;">🔧 Жылдамдық пен Дәлдік</td>
+                <td style="padding: 12px;">Бағдарламаның қателігін тауып, оны ыңғайлы әрі толық түсініп барып қайта жөндеу (Дебаггинг).</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #444;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #FFD700;">30</td>
+                <td style="padding: 12px; font-weight: bold;">🕵️‍♂️ Бас бапкер бақылауы</td>
+                <td style="padding: 12px;">Роботтарды Атырау турнирі алдындағы соңғы толық техникалық тексерістен өткізу.</td>
+            </tr>
+            <tr style="background-color: #1a3a1a; border-bottom: 1px solid #28a745;">
+                <td style="padding: 12px; text-align: center; font-weight: bold; color: #28a745;">31</td>
+                <td style="padding: 12px; font-weight: bold; color: #28a745;">🏆 Үлкен Финал: Ішкі Жарыс!</td>
+                <td style="padding: 12px; font-weight: bold; color: #28a745;">Сынып ішінде чемпионды анықтау және Атырау қаласындағы бас жарысқа ресми жолдама беру!</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <p style="text-align: center; font-size: 1.15em; color: #FFD700; font-weight: bold; margin-top: 35px;">
+        🚀 Бұл жоспар балалардың техникалық ойлау қабілетін дамытып, Атырауда өтетін алдағы жарыста жеңіске жетуіне үлкен септігін тигізеді!
+    </p>
+
+</article></body></html>`;
+    const rulesPage = `<html><body style="background:#0f172a;color:white;font-family:sans-serif;padding:40px"><article style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.7; color: #FFFFFF; max-width: 900px; margin: 0 auto; padding: 25px;">
+
+    <h1 style="color: #FFD700; text-align: center; font-size: 2.2em; margin-bottom: 10px;">📋 Сайтты пайдалану ережелері</h1>
+    <p style="font-size: 1.1em; text-align: center; color: #FFFFFF; opacity: 0.8; margin-bottom: 35px;">
+        Құрметті оқушылар мен ата-аналар! Оқу процесінің тиімді, қауіпсіз әрі қызықты өтуі үшін төмендегі қарапайым ережелерді қатаң сақтауыңызды сұраймыз.
+    </p>
+
+    <hr style="border: 0; height: 1px; background: #FFD700; margin: 30px 0;">
+
+    <h2 style="color: #FFD700; font-size: 1.5em; border-bottom: 1px solid #444; padding-bottom: 5px;">🔐 1. Аккаунт және Қауіпсіздік ережелері</h2>
+    <ul style="list-style-type: none; padding-left: 0;">
+        <li style="margin-bottom: 12px;">🔑 <strong>Құпиясөзді сақтау:</strong> Жеке кабинетіңіздің құпиясөзін ұмытпаңыз және оны ешқандай үшінші тұлғаға (тіпті сыныптастарыңызға да) бермеңіз.</li>
+        <li style="margin-bottom: 12px;">🚫 <strong>Бөлісуге тыйым салу:</strong> Жеке кабинеттегі жабық YouTube сабақ сілтемелерін және оқу материалдарын басқа адамдарға таратуға қатаң тыйым салынады. Әр сілтеме тек сіздің білім алуыңызға арналған.</li>
+    </ul>
+
+    <h2 style="color: #FFD700; font-size: 1.5em; border-bottom: 1px solid #444; padding-bottom: 5px; margin-top: 30px;">🛠️ 2. Робототехника құралдарымен жұмыс</h2>
+    <ul style="list-style-type: none; padding-left: 0;">
+        <li style="margin-bottom: 12px;">🤖 <strong>Өз бетінше іздену:</strong> Сяоксин құрылыс блоктарын өз бетіңізше құрастырып, тәуелсіз модульде бағдарламалап, еркін шығармашылықпен айналысуға толық рұқсат беріледі. Қиялыңызды шектемеңіз!</li>
+        <li style="margin-bottom: 12px;">🔋 <strong>Техникалық ұқыптылық:</strong> Робот бөлшектеріне, моторлар мен пульттерге ұқыпты қараңыз. Батареяларды ауыстыру кезінде мұғалім көрсеткен қауіпсіздік ережелерін (ескі және жаңа батареяны араластырмау) есте сақтаңыз.</li>
+    </ul>
+
+    <h2 style="color: #FFD700; font-size: 1.5em; border-bottom: 1px solid #444; padding-bottom: 5px; margin-top: 30px;">🎯 3. Онлайн және Офлайн сабақ тәртібі</h2>
+    <ul style="list-style-type: none; padding-left: 0;">
+        <li style="margin-bottom: 12px;">👁️ <strong>Максималды фокус:</strong> Сабақ үстінде барлық назарыңызды (фокусты) тек мұғалімге және тапсырмаға бағыттаңыз. Бөгде ойындар мен әлеуметтік желілерге алаңдамаңыз.</li>
+        <li style="margin-bottom: 12px;">🤫 <strong>Конференциядағы тәртіп:</strong> Арнайы онлайн конференциялар немесе вебинарлар кезінде микрофонды орынсыз қоспай, эфирде тыныштық пен мәдениеттілікті сақтаңыз. Сұрақтар болса, чатқа жазыңыз немесе «қол көтеру» батырмасын басыңыз.</li>
+        <li style="margin-bottom: 12px;">⏰ <strong>Уақытты бағалау:</strong> Сабақтарға және Телеграм арнасында жарияланатын арнайы түсіндірме жиналыстарына кешікпей, уақытында қатысыңыз.</li>
+    </ul>
+
+    <h2 style="color: #FFD700; font-size: 1.5em; border-bottom: 1px solid #444; padding-bottom: 5px; margin-top: 30px;">🏆 4. Жарысқа қатысу және Өзара құрмет</h2>
+    <ul style="list-style-type: none; padding-left: 0;">
+        <li style="margin-bottom: 12px;">🤝 <strong>Өзара қолдау:</strong> Командалық жұмыс кезінде басқа оқушылардың идеяларын сыйлаңыз. Біздің мақсатымыз — Атырау қалалық жарысында бірлесіп жеңіске жету.</li>
+        <li style="margin-bottom: 12px;">📈 <strong>Үздіксіз дайындық:</strong> Күнделікті 31 күндік бағдарлама тапсырмаларын уақытылы орындап, Атырау турнирі алдындағы финалдық сынақтарға белсенді қатысыңыз.</li>
+    </ul>
+
+    <div style="background-color: #222; border-left: 6px solid #FFD700; padding: 15px; border-radius: 5px; margin-top: 35px;">
+        <strong style="color: #FFD700;">⚠️ Ереже бұзылған жағдайда:</strong> 
+        Сайт ережелерін (әсіресе сабақ сілтемелерін тарату немесе құпиясөзді өзгеге беру) қайталап бұзған пайдаланушылардың жеке кабинеті ескертусіз бұғатталуы мүмкін. Тәртіп бар жерде — нәтиже бар!
+    </div>
+
+</article></body></html>`;
     const projectOne = `<html><body style="background:#111827;color:white;font-family:sans-serif;padding:40px"><h1 style="font-size:50px;color:#facc15">Робот құрастыру нұсқаулығы</h1><iframe src="https://drive.google.com/file/d/135yFysRxH0uPfrUor8_TL0njkqibeGIr/preview" width="100%" height="600px" allow="autoplay"></iframe></body></html>`;
     const projectTwo = `<html><body style="background:#020617;color:white;font-family:sans-serif;padding:40px"><h1 style="font-size:50px;color:#38bdf8">Мына форумды толтырыңыз</h1><iframe width="100%" height="400" src="https://docs.google.com/forms/d/e/1FAIpQLSedREUTPNptT4SN_A4GMn0-zGzyaNq9DzTcoPbKLNtydnIpiw/viewform?usp=publish-editor" style="margin-top:40px;border:none;border-radius:20px"></iframe></body></html>`;
   </script>
