@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoboLegoTEST</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #f3f4f6;
+            --text: #1f2937;
+            --green: #10b981;
+            --yellow: #f59e0b;
+            --red: #ef4444;
+        }
+        * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg); color: var(--text); margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; }
+        
+        .container { background: white; padding: 2rem; border-radius: 1rem; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); width: 90%; max-width: 600px; text-align: center; }
+        .hidden { display: none !important; }
+        
+        h1.logo { color: var(--primary); font-size: 2.5rem; margin-bottom: 1.5rem; letter-spacing: 2px; font-weight: bold; }
+        
+        input { width: 100%; padding: 0.75rem; margin-bottom: 1rem; border: 1px solid #d1d5db; border-radius: 0.5rem; font-size: 1rem; }
+        button { background-color: var(--primary); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 0.5rem; font-size: 1rem; cursor: pointer; width: 100%; transition: 0.2s; margin-bottom: 0.5rem; }
+        button:hover { opacity: 0.9; }
+        
+        .options { display: flex; flex-direction: column; gap: 0.5rem; margin-top: 1rem; }
+        .option-btn { background: #e5e7eb; color: var(--text); text-align: left; padding: 1rem; }
+        .option-btn:hover, .option-btn.selected { background: var(--primary); color: white; }
+        
+        .result-high { color: var(--green); }
+        .result-medium { color: var(--yellow); }
+        .result-low { color: var(--red); }
+
+        /* Сертификат дизайны */
+        #cert-template { padding: 3rem; border: 10px solid var(--primary); background: #fff; text-align: center; margin-top: 2rem; }
+        #cert-template h2 { font-size: 2.5rem; color: var(--primary); margin-bottom: 0.5rem; }
+        #cert-template h3 { font-size: 1.5rem; margin: 1rem 0; color: #374151; }
+        #cert-template p { font-size: 1.2rem; line-height: 1.6; color: #4b5563; }
+        .cert-name { font-size: 2rem; font-weight: bold; color: var(--text); border-bottom: 2px solid var(--primary); display: inline-block; padding: 0 2rem; margin: 1rem 0; }
+        
+        /* Ережелер мен саясат блогының дизайны */
+        .policy-footer { 
+            font-size: 10px; 
+            color: #6b7280; 
+            margin-top: 2rem; 
+            border-top: 1px solid #e5e7eb; 
+            padding-top: 1rem; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 8px; 
+            width: 100%; 
+        }
+        .policy-footer div { 
+            padding: 8px; 
+            border: 1px solid #e5e7eb; 
+            border-radius: 6px; 
+            width: 90%; 
+            background: #f9fafb;
+            cursor: pointer;
+        }
+
+        /* Ескерту блогының және байланыс батырмаларының дизайны */
+        .warning-box {
+            background-color: #fffbeb; 
+            border: 1px solid #fcd34d;
+            color: #92400e;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            text-align: left;
+        }
+        .warning-box p { margin: 0 0 0.5rem 0; line-height: 1.4; }
+        .warning-box p:last-of-type { margin-bottom: 10px; }
+        
+        .admin-links { display: flex; flex-wrap: wrap; gap: 10px; }
+        .admin-btn { 
+            flex: 1; text-align: center; text-decoration: none; 
+            color: white; padding: 0.5rem 1rem; border-radius: 0.3rem; 
+            font-weight: bold; font-size: 0.85rem; transition: 0.2s;
+            display: inline-block; min-width: 120px;
+        }
+        .wa-btn { background-color: var(--green); }
+        .wa-btn:hover { opacity: 0.8; }
+        .tg-btn { background-color: var(--primary); }
+        .tg-btn:hover { opacity: 0.8; }
+
+        .contact-after-cert {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }
+        .contact-after-cert p {
+            font-size: 0.9rem;
+            color: #6b7280;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login-screen" class="container">
+        <h1 class="logo">RoboLegoTEST</h1>
+        <p>Тестке кіру үшін мәліметтерді енгізіңіз</p>
+        <input type="text" id="user-id" placeholder="Жеке ID">
+        <input type="password" id="user-pass" placeholder="Құпиясөз">
+        <button onclick="login()">Кіру</button>
+        <p id="login-error" style="color: red; font-size: 0.9rem;" class="hidden">ID немесе құпиясөз қате!</p>
+        
+        <div class="warning-box">
+            <p><b>⚠️ Ескерту:</b> Егер сізде логин мен құпиясөз болмаса, сертификат алу үшін тест тапсыра алмайсыз.</p>
+            <p>Логин мен құпиясөз алу үшін әкімшіге жазыңыз:</p>
+            <div class="admin-links">
+                <a href="https://wa.me/77719016170?text=Сәлеметсіз бе! Маған тест тапсыру үшін логин мен құпиясөз бере аласыз ба?" target="_blank" class="admin-btn wa-btn">🟢 WhatsApp</a>
+                <a href="https://t.me/robolegoeducation" target="_blank" class="admin-btn tg-btn">✈️ Telegram</a>
+            </div>
+        </div>
+        
+        <div class="policy-footer">
+            <div>Сайт ережелері</div>
+            <div>Құпиялылық саясаты</div>
+        </div>
+    </div>
+
+    <div id="start-screen" class="container hidden">
+        <h1 class="logo">RoboLegoTEST</h1>
+        <h2>Қош келдіңіз!</h2>
+        <p>Сізге робототехника бойынша 50 сұрақ беріледі. Сәттілік!</p>
+        <button onclick="startQuiz()">Бастау</button>
+    </div>
+
+    <div id="quiz-screen" class="container hidden">
+        <div id="progress-text" style="font-size: 0.9rem; color: #6b7280; text-align: right;">Сұрақ: 1/50</div>
+        <h2 id="question-text" style="font-size: 1.25rem; margin-top: 0.5rem;">Сұрақ мәтіні</h2>
+        <div class="options" id="options-container"></div>
+        <br>
+        <button onclick="nextQuestion()" id="next-btn" class="hidden">Келесі сұрақ</button>
+    </div>
+
+    <div id="result-screen" class="container hidden">
+        <h1 class="logo">RoboLegoTEST</h1>
+        <h2 id="score-text">Сіздің ұпайыңыз: 0/50</h2>
+        <p id="result-message"></p>
+        
+        <div id="cert-section" class="hidden">
+            <input type="text" id="student-name" placeholder="Есіміңізді енгізіңіз (Сертификат үшін)">
+            <button onclick="generateCertificate()">Сертификат алу</button>
+            
+            <div class="contact-after-cert">
+                <p>📞 Сертификат бойынша сұрақтар туындаса немесе мәліметтерді жіберу үшін әкімшіге жазыңыз:</p>
+                <div class="admin-links">
+                    <a href="https://wa.me/77719016170?text=Сәлеметсіз бе! Мен сертификат алу үшін тестті сәтті тапсырдым. Менің аты-жөнім: [Осында жазыңыз]" target="_blank" class="admin-btn wa-btn">🟢 WhatsApp-қа жазу</a>
+                    <a href="https://t.me/robolegoeducation" target="_blank" class="admin-btn tg-btn">✈️ Telegram-ға жазу</a>
+                </div>
+            </div>
+        </div>
+        
+        <button onclick="goHome()" style="background: var(--text); margin-top: 1rem;">Басты бетке қайту</button>
+    </div>
+
+    <div id="cert-wrapper" class="hidden">
+        <div id="cert-template">
+            <h2>СЕРТИФИКАТ</h2>
+            <div class="cert-name" id="cert-display-name">Аты-жөні</div>
+            <p><strong>БІРІНШІ КЕЗЕҢ БАСТЫ КЕЗЕҢІН СӘТТІ АЯҚТАДЫ.</strong><br>
+            Жас инженер сертфикатын жеңіп алдыңыз.<br>
+            Жаңа мүмкіндік ашық!</p>
+            <h3 class="logo">RoboLegoTEST</h3>
+        </div>
+    </div>
+
+    <script>
+        const VALID_ID = "admin";
+        const VALID_PASS = "12345";
+
+        const questions = [
+            { question: "Lego EV3 интеллектуалды блогының басты қызметі қандай?", options: ["Тек қозғалтқыштарды айналдыру", "Датчиктерден ақпарат алып, бағдарламаны өңдеу", "Тек дыбыс шығару", "Бөлшектерді біріктіру"], answer: 1 },
+            { question: "Spike Prime жиынтығындағы түс датчигі (Color Sensor) неше түрлі түсті ажырата алады?", options: ["3 түсті", "5 түсті", "8 түсті", "Түстерді мүлдем ажыратпайды"], answer: 2 },
+            { question: "Робот белгілі бір әрекетті шексіз қайталау үшін қандай блок қолданылады?", options: ["If-Else (Егер-Онда)", "Wait (Күту)", "Loop (Цикл)", "Switch (Ауыстырғыш)"], answer: 2 },
+            { question: "Ультрадыбыстық датчик (Ultrasonic Sensor) не үшін қажет?", options: ["Түсті анықтау үшін", "Кедергіге дейінгі қашықтықты өлшеу үшін", "Роботтың бұрылу бұрышын білу үшін", "Басу күшін өлшеу үшін"], answer: 1 },
+            { question: "Гироскопиялық датчик (Gyro Sensor) не өлшейді?", options: ["Жарық деңгейін", "Роботтың жылдамдығын", "Айналу бұрышын немесе еңістігін", "Дыбыс қаттылығын"], answer: 2 },
+            { question: "Робототехниканың үш заңын ұсынған танымал ғылыми-фантаст жазушы кім?", options: ["Альберт Эйнштейн", "Айзек Азимов", "Никола Тесла", "Стив Джобс"], answer: 1 },
+            { question: "Lego EV3 сервомоторларының ішіндегі кірістірілген датчик не қызмет атқарады?", options: ["Температураны өлшейді", "Мотордың қанша градусқа бұрылғанын санайды", "Түсті анықтайды", "Тоқ күшін реттейді"], answer: 1 },
+            { question: "Егер робот қара сызықпен жүруі керек болса, қандай датчик міндетті түрде қолданылады?", options: ["Жанасу датчигі", "Ультрадыбыстық датчик", "Түс немесе жарық датчигі", "Гироскоп"], answer: 2 },
+            { question: "Spike Prime хабында (Hub) қанша кіріс/шығыс порты бар?", options: ["4 порт", "6 порт", "8 порт", "10 порт"], answer: 1 },
+            { question: "Робототехникадағы WRO аббревиатурасы нені білдіреді?", options: ["World Robotics Organization", "World Robot Olympiad", "World Right Robot", "Wide Robot Online"], answer: 1 },
+            { question: "Lego Mindstorms EV3 бағдарламасында қозғалтқышты секундпен айналдырудың тиімсіздігі неде?", options: ["Батарея заряды азайғанда робот аз қашықтыққа жүріп қалады", "Мотор күйіп кетуі мүмкін", "Робот тым жылдам жүреді", "Ешқандай айырмашылығы жоқ"], answer: 0 },
+            { question: "Робот бағдарламасындағы 'Ауыстырғыш' (Switch) блогы не үшін керек?", options: ["Сымдарды ауыстыру үшін", "Шартқа байланысты екі түрлі жолдың бірін таңдау үшін", "Бағдарламаны тоқтату үшін", "Дыбысты бәсеңдету үшін"], answer: 1 },
+            { question: "Үлкен тісті дөңгелектен кіші тісті дөңгелекке қозғалыс берілсе, жылдамдық қалай өзгереді?", options: ["Азаяды", "Өзгермейді", "Артады", "Мотор тоқтайды"], answer: 2 },
+            { question: "Кіші тісті дөңгелектен үлкен тісті дөңгелекке қозғалыс берілгенде не артады?", options: ["Жылдамдық", "Күш (айналу моменті)", "Дөңгелектің өлшемі", "Градус саны"], answer: 1 },
+            { question: "Құрт тәрізді беріліс (Worm gear) не үшін қолданылады?", options: ["Жылдамдықты шексіз арттыру үшін", "Қозғалысты 90 градусқа бұрып, күшті үлкен мөлшерде арттыру үшін", "Роботты жеңілдету үшін", "Тек сәндік үшін"], answer: 1 },
+            { question: "Жанасу датчигінің (Touch Sensor) қандай күйлері бар?", options: ["Тек басылған", "Басылған, жіберілген, соғылған (щелчок)", "0-ден 100-ге дейінгі мәндер", "Қызыл және Көк түстер"], answer: 1 },
+            { question: "Роботтың екі дөңгелегі қарама-қарсы бағытта айналса, робот қалай қозғалады?", options: ["Түзу алға жүреді", "Артқа шегінеді", "Өз орнында шыр көбелек айналады", "Тоқтап тұрады"], answer: 2 },
+            { question: "Spike Prime бағдарламасын мәтіндік режимде жасау үшін қолданылатын тіл қандай?", options: ["C++", "Java", "Python", "PHP"], answer: 2 },
+            { question: "Lego EV3 блогында 'Brick Buttons' деп нені атайды?", options: ["Сыртындағы сымдарды", "Блог бетіндегі батырмаларды", "Мотор жалғайтын порттарды", "Экранның жарығын"], answer: 1 },
+            { question: "Робот қозғалысын уақытша тоқтатып, белгілі бір оқиғаны күту үшін қандай блок пайдаланылады?", options: ["Move (Қозғалыс)", "Wait (Күту)", "Loop (Цикл)", "Stop (Тоқтату)"], answer: 1 },
+            { question: "Бағдарламалауда мәліметтерді уақытша сақтайтын орын қалай аталады?", options: ["Константа", "Айнымалы (Variable)", "Функция", "Тізім"], answer: 1 },
+            { question: "Төмендегілердің қайсысы Lego роботтарындағы шығыс (Output) құрылғысына жатады?", options: ["Түс датчигі", "Сервомотор", "Ультрадыбыстық датчик", "Гироскоп"], answer: 1 },
+            { question: "Төмендегілердің қайсысы кіріс (Input) құрылғысы болып табылады?", options: ["Экран", "Динамик", "Ультрадыбыстық датчик", "Үлкен қозғалтқыш"], answer: 2 },
+            { question: "Lego EV3 блогында датчиктер қай порттарға жалғанады?", options: ["A, B, C, D", "1, 2, 3, 4", "In, Out", "USB порттарына"], answer: 1 },
+            { question: "Lego EV3 блогында қозғалтқыштар (моторлар) қай порттарға жалғанады?", options: ["1, 2, 3, 4", "A, B, C, D", "X, Y, Z", "Кез келген бос портқа"], answer: 1 },
+            { question: "Робот сызық бойымен дәл жүру үшін қандай алгоритм жиі қолданылады?", options: ["Сұрыптау алгоритмі", "ПИД-реттегіш (PID controller)", "Кездейсоқ қозғалыс", "Сызықтық іздеу"], answer: 1 },
+            { question: "ПИД-реттегіштегі 'П' әрпі нені білдіреді?", options: ["Параллель", "Пропорционал", "Периметр", "Тұрақты"], answer: 1 },
+            { question: "Дифференциалды басқарылатын робот деген не?", options: ["Тек бір моторы бар робот", "Екі тәуелсіз жетекші дөңгелегі арқылы бұрылатын робот", "Рүлі бар машина сияқты робот", "Ұшатын дрон тәрізді"], answer: 1 },
+            { question: "Spike Prime жиынтығындағы 'Күш датчигі' (Force Sensor) нені өлшеуге арналған?", options: ["Қоршаған ортаның қысымын", "Басу күшін (Ньютонмен)", "Роботтың салмағын", "Магнит өрісін"], answer: 1 },
+            { question: "Роботтың бағдарламасындағы қателіктерді іздеу және түзету процесі қалай аталады?", options: ["Компиляция", "Дебаггинг (Отладка)", "Интеграция", "Модельдеу"], answer: 1 },
+            { question: "Робототехника жарыстарындағы 'Сумо' санатының мақсаты не?", options: ["Қарсыласты рингтен итеріп шығару", "Ең жылдам жүріп өту", "Лабиринттен шығу", "Түстерді сұрыптау"], answer: 0 },
+            { question: "Кедергілерді айналып өту лабиринтінде робот қай ережені жиі қолданады?", options: ["Оң немесе сол қол ережесі (қабырғаны ұстап жүру)", "Кездейсоқ бұрылу", "Тек алға жүру", "Секіру алгоритмі"], answer: 0 },
+            { question: "Беріліс қорабындағы 'Idler gear' (аралық тісті дөңгелек) не үшін керек?", options: ["Жылдамдықты екі есе арттыру үшін", "Айналу бағытын өзгертпей, қозғалысты қашықтыққа жеткізу үшін", "Күшті азайту үшін", "Моторды қорғау үшін"], answer: 1 },
+            { question: "Робот дөңгелегінің диаметрі үлкен болса, бір айналымда ол қалай жүреді?", options: ["Аз қашықтық жүреді", "Көп қашықтық жүреді", "Мүлдем қозғалмайды", "Тек артқа жүреді"], answer: 1 },
+            { question: "Lego Mindstorms EV3-те Bluetooth байланысы не үшін қолданылады?", options: ["Батареяны зарядтау үшін", "Бағдарламаны сымсыз жүктеу немесе роботтар арасында мәлімет алмасу үшін", "Датчиктердің сезімталдығын арттыру үшін", "Музыка тыңдау үшін"], answer: 1 },
+            { question: "Робототехникада 'Датчик' (Сенсор) ұғымының баламасы қандай?", options: ["Актюатор", "Сезгiш элемент (Рецептор)", "Микропроцессор", "Дисплей"], answer: 1 },
+            { question: "Мотордан дөңгелекке қозғалысты резеңке арқылы беру қалай аталады?", options: ["Тісті беріліс", "Таспалы (белдікті) беріліс", "Шынжырлы беріліс", "Үйкеліс берілісі"], answer: 1 },
+            { question: "Lego бөлшектеріндегі 'Штифт' (Pin) не үшін қолданылады?", options: ["Екі тесігі бар бөлшекті өзара байланыстыру үшін", "Дөңгелекті бекіту үшін", "Моторға тоқ беру үшін", "Бағдарлама жазу үшін"], answer: 0 },
+            { question: "Бағдарламалаудағы 'Шексіз цикл' деген не?", options: ["Бір рет қана орындалатын код", "Ешқашан тоқтамайтын, шарты әрдайым ақиқат цикл", "Қатесі бар жазылмай қалған код", "Бес рет қайталанатын блок"], answer: 1 },
+            { question: "Spike Prime хабындағы кірістірілген 5x5 жарықдиодты (LED) матрица не үшін қолданылады?", options: ["Роботтың айналасын жарықтандыру үшін", "Суреттерді, мәтінді немесе сандарды көрсету үшін", "Батарея деңгейін ғана білу үшін", "Түстерді анықтау үшін"], answer: 1 },
+            { question: "Төмендегілердің қайсысы роботтың механикалық бөлігіне жатпайды?", options: ["Тісті дөңгелектер", "Шасси (жақтау)", "Алгоритм", "Дөңгелектер"], answer: 2 },
+            { question: "Қазіргі заманғы өндірістік роботтар зауыттарда көбіне не істейді?", options: ["Адамдармен әңгімелеседі", "Автомобиль құрастыру, дәнекерлеу сияқты қайталанатын ауыр жұмыстарды атқарады", "Кітап оқиды", "Интернетте отырады"], answer: 1 },
+            { question: "Робот бағдарламасындағы логикалық тип (Boolean) қандай мәндерді қабылдайды?", options: ["0-ден 9-ға дейінгі сандар", "True (Ақиқат) немесе False (Жалған)", "Кез келген мәтін", "Тек теріс сандар"], answer: 1 },
+            { question: "Lego EV3 бағдарламасындағы 'Талдау' (Data logging) функциясы не үшін керек?", options: ["Датчиктерден уақыт өте келе алынған мәліметтерді графигімен жазып алу үшін", "Бағдарламаны өшіру үшін", "Роботты жылдамдату үшін", "Есте сақтау қабілетін азайту үшін"], answer: 0 },
+            { question: "Егер робот бұрылғанда сырғанап кетсе, қай датчиктің көрсеткіші қате көрсетілуі мүмкін?", options: ["Түс датчигі", "Жанасу датчигі", "Гироскоп", "Ультрадыбыс"], answer: 2 },
+            { question: "Робототехникадағы 'Актюатор' (Actuator) деген не?", options: ["Ақпарат жинайтын құрылғы", "Роботты қозғалысқа келтіретін атқарушы құрылғы (мотор)", "Микросхема", "Қуат көзі"], answer: 1 },
+            { question: "Ом заңы бойынша кернеуді (V) табу формуласы қандай?", options: ["V = I * R", "V = I / R", "V = R / I", "V = I + R"], answer: 0 },
+            { question: "Бағдарламада бірнеше шартты қатар тексеру үшін қандай логикалық операторлар қолданылады?", options: ["AND (ЖӘНЕ), OR (НЕМЕСЕ)", "PLUS, MINUS", "START, STOP", "LOOP, REPEAT"], answer: 0 },
+            { question: "Lego бөлшектерінің өлшем бірлігі ретінде не алынады?", options: ["Миллиметр", "Сантиметр", "Модуль (M) немесе Студ (Stud)", "Дюйм"], answer: 2 },
+            { question: "Робототехниканың болашақтағы басты мақсаты қандай?", options: ["Адам өмірін қауіпсіз әрі жеңіл ету, күрделі процестерді автоматтандыру", "Адамдарды жұмыссыз қалдыру", "Тек ойыншықтар жасау", "Компьютерлерді жою"], answer: 0 }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function showScreen(id) {
+            document.querySelectorAll('.container').forEach(el => el.classList.add('hidden'));
+            document.getElementById(id).classList.remove('hidden');
+        }
+
+        function login() {
+            const uid = document.getElementById('user-id').value;
+            const upass = document.getElementById('user-pass').value;
+            
+            if (uid === VALID_ID && upass === VALID_PASS) {
+                showScreen('start-screen');
+            } else {
+                document.getElementById('login-error').classList.remove('hidden');
+            }
+        }
+
+        function startQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            showScreen('quiz-screen');
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            document.getElementById('next-btn').classList.add('hidden');
+            document.getElementById('progress-text').innerText = `Сұрақ: ${currentQuestion + 1} / ${questions.length}`;
+            
+            const q = questions[currentQuestion];
+            document.getElementById('question-text').innerText = `${currentQuestion + 1}. ${q.question}`;
+            
+            const optionsDiv = document.getElementById('options-container');
+            optionsDiv.innerHTML = '';
+            
+            q.options.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = opt;
+                btn.onclick = () => selectOption(btn, index);
+                optionsDiv.appendChild(btn);
+            });
+        }
+
+        let selectedAnswer = -1;
+        function selectOption(btn, index) {
+            document.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            selectedAnswer = index;
+            document.getElementById('next-btn').classList.remove('hidden');
+        }
+
+        function nextQuestion() {
+            if (selectedAnswer === questions[currentQuestion].answer) {
+                score++;
+            }
+            
+            currentQuestion++;
+            if (currentQuestion < questions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            showScreen('result-screen');
+            const total = questions.length;
+            const percentage = (score / total) * 100;
+            
+            const scoreText = document.getElementById('score-text');
+            const resultMsg = document.getElementById('result-message');
+            const certSection = document.getElementById('cert-section');
+            
+            scoreText.innerText = `Сіздің ұпайыңыз: ${score} / ${total}`;
+            scoreText.className = ''; 
+
+            if (percentage >= 80) {
+                scoreText.classList.add('result-high');
+                resultMsg.innerText = "Өте жақсы нәтиже! Сіз сертификат алуға лайықсыз.";
+                certSection.classList.remove('hidden');
+            } else if (percentage >= 50) {
+                scoreText.classList.add('result-medium');
+                resultMsg.innerText = "Жақсы нәтиже! Сіз сертификат ала аласыз.";
+                certSection.classList.remove('hidden');
+            } else {
+                scoreText.classList.add('result-low');
+                resultMsg.innerText = "Өкінішке орай, ұпайыңыз төмен. Қайта дайындалып келіңіз.";
+                certSection.classList.add('hidden');
+            }
+        }
+
+        function goHome() {
+            document.getElementById('user-id').value = '';
+            document.getElementById('user-pass').value = '';
+            document.getElementById('login-error').classList.add('hidden');
+            showScreen('login-screen');
+        }
+
+        function generateCertificate() {
+            const name = document.getElementById('student-name').value;
+            if (!name) {
+                alert("Өтініш, есіміңізді енгізіңіз!");
+                return;
+            }
+            
+            document.getElementById('cert-display-name').innerText = name;
+            const element = document.getElementById('cert-template');
+            
+            const opt = {
+                margin:       0.5,
+                filename:     `Sertifikat_${name}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { scale: 2 },
+                jsPDF:        { unit: 'in', format: 'letter', orientation: 'landscape' }
+            };
+            
+            document.getElementById('cert-wrapper').classList.remove('hidden');
+            html2pdf().set(opt).from(element).save().then(() => {
+                document.getElementById('cert-wrapper').classList.add('hidden');
+            });
+        }
+    </script>
+</body>
+</html>
