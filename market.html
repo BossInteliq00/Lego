@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ROBO LEGO | Монета жүйесі</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="image\icon.png" type="image/png">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; font-family:'Inter',sans-serif; }
+    body { background:#020617; color:white; overflow-x:hidden; min-height: 100vh; display: flex; flex-direction: column; }
+    .glass { background:rgba(255,255,255,0.05); backdrop-filter:blur(16px); border:1px solid rgba(255,255,255,0.1); }
+    .gradient-text { background:linear-gradient(to right,#facc15,#38bdf8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .hidden-section { display: none; }
+    
+    @keyframes slideDown { 0% { transform: translateY(-50px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+    @keyframes fadeIn { 0% { opacity: 0; transform: scale(0.9); } 100% { opacity: 1; transform: scale(1); } }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .animate-slide-down { animation: slideDown 0.5s ease-out forwards; }
+    .animate-fade-in { animation: fadeIn 0.4s ease-out forwards; }
+    .animate-float { animation: float 3s ease-in-out infinite; }
+
+    #toast-container { position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; }
+    .toast { padding: 15px 25px; border-radius: 12px; font-weight: bold; color: white; animation: slideDown 0.3s ease-out forwards; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+    .toast-success { background: linear-gradient(135deg, #10b981, #059669); border: 1px solid #34d399; }
+    .toast-error { background: linear-gradient(135deg, #ef4444, #b91c1c); border: 1px solid #f87171; }
+  </style>
+</head>
+<body class="relative">
+
+  <div class="fixed w-[500px] h-[500px] bg-blue-600 blur-[200px] opacity-20 rounded-full top-[-100px] left-[-100px] pointer-events-none"></div>
+  <div class="fixed w-[500px] h-[500px] bg-yellow-400 blur-[200px] opacity-10 rounded-full bottom-[-100px] right-[-100px] pointer-events-none"></div>
+  <div id="toast-container"></div>
+
+  <nav class="w-full z-50 px-6 py-6 relative">
+    <div class="max-w-4xl mx-auto flex items-center justify-between flex-wrap gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-yellow-400 rounded-xl flex items-center justify-center text-black text-xl shadow-lg shadow-yellow-400/20">🪙</div>
+        <h1 class="text-2xl font-black gradient-text tracking-wide">ROBO COIN</h1>
+      </div>
+      <div class="flex items-center gap-3">
+        <a href="index.html" class="flex items-center gap-2 bg-white/5 border border-white/10 hover:bg-white/10 px-5 py-2.5 rounded-xl text-sm font-semibold duration-300">
+          <span>⬅</span> Артқа қайту
+        </a>
+        <button onclick="logout()" id="logoutBtn" class="hidden-section flex items-center gap-2 bg-red-500/20 text-red-400 border border-red-500/30 hover:bg-red-500/30 px-5 py-2.5 rounded-xl text-sm font-semibold duration-300">
+          Шығу
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="flex-grow flex items-center justify-center px-6 py-4 relative z-10 w-full max-w-4xl mx-auto">
+    
+    <div id="login-section" class="w-full max-w-md glass rounded-[35px] p-8 shadow-2xl text-center relative hidden-section">
+      <div class="absolute -top-12 left-0 w-full text-center animate-bounce">
+        <span class="bg-blue-500/20 border border-blue-400/50 text-blue-300 text-sm px-4 py-2 rounded-full backdrop-blur-md shadow-lg inline-block">
+          💡 Сайтқа кірер алдын жеке ID мен құпиясөзіңізді енгізіңіз
+        </span>
+      </div>
+      <h2 class="text-3xl font-black text-white mb-6">Жүйеге кіру</h2>
+      <p class="text-slate-400 text-sm mb-6">ID: <b>***</b> (Мұғалім), <b>***</b> (Оқушы). Пароль: <b>***</b></p>
+      <div class="space-y-4">
+        <input type="text" id="loginId" placeholder="Жеке ID" class="w-full bg-[#0f172a]/80 border border-slate-700/50 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-yellow-400">
+        <input type="password" id="loginPass" placeholder="Құпиясөз" class="w-full bg-[#0f172a]/80 border border-slate-700/50 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-yellow-400">
+        <button onclick="login()" class="w-full bg-yellow-400 text-black py-4 rounded-2xl font-black text-lg hover:bg-yellow-300 transition-all shadow-lg shadow-yellow-400/20">Кіру</button>
+      </div>
+    </div>
+
+    <div id="teacher-section" class="w-full hidden-section space-y-6 animate-fade-in">
+      <div class="glass rounded-[35px] p-8 shadow-2xl flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="flex items-center gap-6">
+          <div class="relative group cursor-pointer">
+            <img id="teacherAvatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=Teacher&backgroundColor=020617" class="w-24 h-24 rounded-full border-4 border-yellow-400 bg-slate-800 object-cover">
+            <input type="file" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer" onchange="uploadAvatar(event, 'teacherAvatar')">
+          </div>
+          <div>
+            <h2 class="text-3xl font-black text-white mb-1"><span id="teacherName"></span></h2>
+            <p class="text-slate-400">Дәреже: <span id="teacherRank" class="font-bold text-yellow-400"></span></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass rounded-[35px] p-8 shadow-2xl">
+        <h3 class="text-xl font-bold text-white mb-4">Оқушыларға монета тарату 🚀</h3>
+        <div class="bg-[#0f172a]/50 p-6 rounded-2xl border border-white/5 space-y-4">
+          <div class="flex gap-4">
+            <input type="text" id="studentSearchId" placeholder="Оқушының ID нөмірі (Мысалы: S-1)" class="w-full bg-[#0f172a]/80 border border-slate-700/50 rounded-xl px-5 py-3 text-white focus:outline-none focus:border-yellow-400">
+            <button onclick="findStudentForCoin()" class="bg-blue-500 hover:bg-blue-400 text-white px-6 py-3 rounded-xl font-bold transition-all whitespace-nowrap">Іздеу</button>
+          </div>
+          <div id="studentFoundCard" class="hidden bg-slate-800/80 p-4 rounded-xl border border-blue-500/50 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-4">
+              <div class="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center text-2xl border border-blue-400">👦</div>
+              <div>
+                <p class="text-sm text-slate-400">Оқушы табылды:</p>
+                <p id="foundStudentName" class="font-bold text-white text-lg"></p>
+                <p class="text-xs text-cyan-400">Ағымдағы баланс: <span id="foundStudentBalance"></span> RC</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-3 w-full sm:w-auto">
+              <input type="number" id="coinAmount" placeholder="Сома" class="w-24 bg-[#020617] border border-slate-600 rounded-lg px-3 py-2 text-white text-center focus:outline-none focus:border-yellow-400">
+              <button onclick="sendCoins()" class="bg-green-500 text-white px-4 py-2 rounded-lg font-bold hover:bg-green-400 transition-all">Жіберу ✅</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass rounded-[35px] p-8 shadow-2xl">
+        <h3 class="text-xl font-bold text-white mb-4">Жіберілген монеталар тарихы 📜</h3>
+        <div id="historyList" class="space-y-3 max-h-40 overflow-y-auto pr-2"></div>
+      </div>
+    </div>
+
+    <div id="student-section" class="w-full hidden-section space-y-6 animate-fade-in">
+      <div class="glass rounded-[35px] p-8 shadow-2xl flex justify-between items-center flex-wrap gap-6">
+        <div class="flex items-center gap-6">
+          <div class="relative group cursor-pointer">
+            <img id="studentAvatar" src="https://api.dicebear.com/7.x/bottts/svg?seed=Student&backgroundColor=020617" class="w-24 h-24 rounded-full border-4 border-cyan-400 bg-slate-800 object-cover">
+            <input type="file" accept="image/*" class="absolute inset-0 opacity-0 cursor-pointer" onchange="uploadAvatar(event, 'studentAvatar')">
+          </div>
+          <div>
+            <h2 class="text-3xl font-black text-white mb-1"><span id="studentName"></span></h2>
+            <p class="text-slate-400">ID: <span id="studentIdDisplay" class="font-bold text-white"></span> | Дәреже: <span id="studentRank" class="font-bold text-cyan-400"></span></p>
+          </div>
+        </div>
+        <div class="bg-gradient-to-r from-yellow-400 to-yellow-600 p-1 rounded-2xl w-full sm:w-auto">
+          <div class="bg-[#0f172a] px-6 py-4 rounded-xl flex items-center justify-center gap-3">
+            <span class="text-3xl">🪙</span>
+            <div>
+              <p class="text-xs text-slate-400 uppercase font-bold">Баланс</p>
+              <p class="text-2xl font-black text-yellow-400"><span id="studentBalance">0</span> RC</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass rounded-[35px] p-8 shadow-2xl">
+        <h3 class="text-2xl font-bold text-white mb-6">Ойыншықтар дүкені 🛒</h3>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4" id="shopItems"></div>
+      </div>
+    </div>
+  </main>
+
+  <div id="robotOverlay" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[200] hidden flex-col items-center justify-center p-4">
+    <div class="animate-float mb-6 relative">
+      <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Guide&backgroundColor=facc15" class="w-40 h-40 rounded-full border-4 border-yellow-400 shadow-[0_0_50px_rgba(250,204,21,0.5)]">
+    </div>
+    <div class="glass p-8 rounded-3xl max-w-lg text-center animate-slide-down border-yellow-400/50">
+      <h3 class="text-2xl font-black text-yellow-400 mb-4" id="robotTitle">Қош келдіңіз!</h3>
+      <p class="text-lg text-slate-200 mb-8 leading-relaxed" id="robotMessage"></p>
+      <button onclick="closeRobot()" class="bg-yellow-400 text-black px-8 py-3 rounded-xl font-bold hover:bg-yellow-300 transition-all shadow-lg shadow-yellow-400/20 text-lg">Жалғастыру 🚀</button>
+    </div>
+  </div>
+
+  <div id="teacherWarningModal" class="fixed inset-0 bg-red-900/90 backdrop-blur-md z-[150] hidden flex items-center justify-center p-4">
+    <div class="bg-[#020617] border border-red-500/50 p-8 rounded-3xl max-w-lg text-center animate-slide-down shadow-[0_0_50px_rgba(239,68,68,0.3)]">
+      <div class="text-5xl mb-4">⚠️</div>
+      <h3 class="text-2xl font-black text-red-500 mb-4">Назар аударыңыз!</h3>
+      <p class="text-slate-300 mb-6 text-sm leading-relaxed">
+        Егерде сіз қателесіп немесе тағы басқа ошибкаға ұшырасаңыз, сайттың басты бетіндегі көмек бөліміне жүгініңіз. 
+        <strong class="text-red-400">Егер сіз біздің сайттың ережелерін бұзсаңыз, сізді сайттан шығарып бан беруімізге тура келеді.</strong>
+      </p>
+      <button onclick="acceptWarning()" class="w-full bg-red-600 text-white px-8 py-4 rounded-xl font-bold hover:bg-red-500 transition-all">Келісемін</button>
+    </div>
+  </div>
+
+  <div id="buyModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4">
+    <div class="glass rounded-[35px] p-8 w-full max-w-md relative">
+      <button onclick="closeModal()" class="absolute top-4 right-6 text-slate-400 hover:text-white text-2xl font-bold">✕</button>
+      <h3 class="text-2xl font-black text-white mb-4">Сатып алу</h3>
+      <div id="buyItemDetails" class="bg-[#0f172a]/50 p-4 rounded-xl mb-4 border border-white/5"></div>
+      <div class="space-y-4">
+        <div>
+          <label class="block text-sm font-semibold text-slate-300 mb-2">Ата-ананың WhatsApp нөмірі:</label>
+          <input type="text" id="parentPhone" placeholder="+7 777 000 00 00" class="w-full bg-[#0f172a]/80 border border-slate-700/50 rounded-xl px-5 py-3 text-white focus:outline-none focus:border-yellow-400">
+        </div>
+        <button onclick="confirmPurchase()" class="w-full bg-green-500 text-white py-4 rounded-xl font-black hover:bg-green-400 transition-all">Сатып алу</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // --- 1. БАЗАНЫ ЖӘНЕ СЕССИЯНЫ БАСТАУ ---
+    if (!localStorage.getItem('roboUsers')) {
+      const initialUsers = {
+        "DEV-1": { role: "dev", pass: "admin", name: "Saipolla Askhat", rank: "Разработчик сайта", balance: 9999 },
+        "T-1": { role: "teacher", pass: "123", name: "Асан Мұғалім", rank: "Аға Оқытушы" },
+        "S-1": { role: "student", pass: "123", name: "Ерасыл Арманов", rank: "Робот Құрастырушы", balance: 0 },
+        "S-2": { role: "student", pass: "123", name: "Аружан Серік", rank: "Бастаушы", balance: 0 }
+      };
+      localStorage.setItem('roboUsers', JSON.stringify(initialUsers));
+      localStorage.setItem('roboHistory', JSON.stringify([]));
+    }
+
+    const toys = [
+      { id: "TOY-001", name: "LEGO Қозғалтқышы", price: 30, img: "⚙️" },
+      { id: "TOY-002", name: "Ультрадыбысты Сенсор", price: 50, img: "📡" },
+      { id: "TOY-003", name: "Робот Дөңгелектері", price: 20, img: "🛞" }
+    ];
+
+    let currentUser = null;
+    let selectedToy = null;
+    let studentTarget = null;
+    const adminWhatsAppNumber = "77759540576";
+
+    // САЙТТЫ ҚАЙТА ЖАҢАРТҚАНДА (F5) АВТОМАТТЫ ТҮРДЕ КІРІП ТҰРУ ҮШІН:
+    window.onload = function() {
+      const savedSessionId = localStorage.getItem('roboActiveSession');
+      const users = JSON.parse(localStorage.getItem('roboUsers'));
+
+      if (savedSessionId && users[savedSessionId]) {
+        currentUser = { id: savedSessionId, ...users[savedSessionId] };
+        showSection('none'); // Бастапқы кіру бетін жасыру
+        // Логин сұрамай, тікелей дашбордты ашу
+        if (currentUser.role === 'teacher' || currentUser.role === 'dev') {
+          loadTeacherDashboard();
+        } else {
+          loadStudentDashboard();
+        }
+      } else {
+        showSection('login-section'); // Егер сессия жоқ болса, логин бетін ашу
+      }
+    };
+
+    function showToast(message, type = 'success') {
+      const container = document.getElementById('toast-container');
+      const toast = document.createElement('div');
+      toast.className = `toast ${type === 'success' ? 'toast-success' : 'toast-error'}`;
+      toast.textContent = message;
+      container.appendChild(toast);
+      setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 3000);
+    }
+
+    function showSection(sectionId) {
+      document.getElementById('login-section').style.display = 'none';
+      document.getElementById('teacher-section').style.display = 'none';
+      document.getElementById('student-section').style.display = 'none';
+      document.getElementById('logoutBtn').style.display = (sectionId === 'login-section' || sectionId === 'none') ? 'none' : 'flex';
+      
+      if(sectionId !== 'none') document.getElementById(sectionId).style.display = 'block';
+    }
+
+    // --- 2. ЛОГИН ЖӘНЕ ШЫҒУ ---
+    function login() {
+      const id = document.getElementById('loginId').value.trim().toUpperCase();
+      const pass = document.getElementById('loginPass').value;
+      const users = JSON.parse(localStorage.getItem('roboUsers'));
+
+      if (users[id] && users[id].pass === pass) {
+        currentUser = { id: id, ...users[id] };
+        // СЕССИЯНЫ САҚТАУ (БЕТ ЖАҢАРҒАНДА ЖОҒАЛМАУ ҮШІН)
+        localStorage.setItem('roboActiveSession', id); 
+        
+        showToast("Сайтқа сәтті кірдіңіз", "success");
+        showSection('none'); 
+        startRobotOnboarding(); // Робот тек жаңадан логин тергенде ғана шығады
+      } else {
+        showToast("Кешіріңіз, қате тердіңіз. Логин немесе пароль дұрыс емес", "error");
+      }
+    }
+
+    function logout() {
+      currentUser = null;
+      localStorage.removeItem('roboActiveSession'); // СЕССИЯНЫ ӨШІРУ
+      document.getElementById('loginId').value = '';
+      document.getElementById('loginPass').value = '';
+      showSection('login-section');
+    }
+
+    // --- 3. ҚАЛҒАН ФУНКЦИЯЛАР (ӨЗГЕРІССІЗ, ТЕК ЖАҚСАРТЫЛҒАН) ---
+    function startRobotOnboarding() {
+      const overlay = document.getElementById('robotOverlay');
+      overlay.style.display = 'flex';
+      if (currentUser.role === 'teacher' || currentUser.role === 'dev') {
+        document.getElementById('robotTitle').textContent = `Сәлем, ${currentUser.name}! 👨‍🏫`;
+        document.getElementById('robotMessage').innerHTML = "Оқушыларға еңбектеріне қарай <b>монеталар тарата аласыз</b>. Абай болыңыз, монеталар қатаң есепте!";
+      } else {
+        document.getElementById('robotTitle').textContent = `Сәлем, ${currentUser.name}! 🤖`;
+        document.getElementById('robotMessage').innerHTML = "Бұл сенің жеке кабинетің! Жиналған <b>монеталарыңды</b> дүкеннен керемет робот бөлшектеріне айырбастай аласың.";
+      }
+    }
+
+    function closeRobot() {
+      document.getElementById('robotOverlay').style.display = 'none';
+      if (currentUser.role === 'teacher' || currentUser.role === 'dev') {
+        document.getElementById('teacherWarningModal').style.display = 'flex';
+      } else {
+        loadStudentDashboard();
+      }
+    }
+
+    function acceptWarning() {
+      document.getElementById('teacherWarningModal').style.display = 'none';
+      loadTeacherDashboard();
+    }
+
+    function loadTeacherDashboard() {
+      document.getElementById('teacherName').textContent = currentUser.name;
+      document.getElementById('teacherRank').textContent = currentUser.rank;
+      const savedAvatar = localStorage.getItem(`avatar_${currentUser.id}`);
+      if(savedAvatar) document.getElementById('teacherAvatar').src = savedAvatar;
+      updateHistory();
+      showSection('teacher-section');
+    }
+
+    function findStudentForCoin() {
+      const sid = document.getElementById('studentSearchId').value.trim().toUpperCase();
+      const users = JSON.parse(localStorage.getItem('roboUsers'));
+      const card = document.getElementById('studentFoundCard');
+
+      if (users[sid] && users[sid].role === 'student') {
+        studentTarget = { id: sid, ...users[sid] };
+        document.getElementById('foundStudentName').textContent = studentTarget.name;
+        document.getElementById('foundStudentBalance').textContent = studentTarget.balance;
+        card.classList.remove('hidden'); card.classList.add('flex');
+      } else {
+        card.classList.add('hidden'); card.classList.remove('flex'); studentTarget = null;
+        showToast("Оқушы табылмады немесе ID қате", "error");
+      }
+    }
+
+    function sendCoins() {
+      if (!studentTarget) return;
+      const amount = parseInt(document.getElementById('coinAmount').value);
+      if (isNaN(amount) || amount <= 0) { showToast("Дұрыс сома енгізіңіз", "error"); return; }
+
+      let users = JSON.parse(localStorage.getItem('roboUsers'));
+      users[studentTarget.id].balance += amount;
+      localStorage.setItem('roboUsers', JSON.stringify(users));
+
+      let history = JSON.parse(localStorage.getItem('roboHistory'));
+      history.unshift({ teacher: currentUser.name, student: studentTarget.name, amount: amount, date: new Date().toLocaleString('kk-KZ') });
+      localStorage.setItem('roboHistory', JSON.stringify(history));
+
+      document.getElementById('studentSearchId').value = '';
+      document.getElementById('coinAmount').value = '';
+      document.getElementById('studentFoundCard').classList.add('hidden');
+      document.getElementById('studentFoundCard').classList.remove('flex');
+      
+      showToast("Сәтті жіберілді", "success");
+      updateHistory();
+    }
+
+    function updateHistory() {
+      const history = JSON.parse(localStorage.getItem('roboHistory'));
+      const list = document.getElementById('historyList');
+      list.innerHTML = history.map(h => `
+        <div class="bg-[#0f172a]/80 p-3 rounded-lg border border-white/5 flex justify-between items-center text-sm">
+          <div><span class="text-cyan-400">${h.student}</span> оқушысына</div>
+          <div class="font-bold text-yellow-400">+${h.amount} RC</div>
+          <div class="text-slate-500 text-xs">${h.date}</div>
+        </div>
+      `).join('') || '<p class="text-slate-500 text-sm">Әзірге тарих бос.</p>';
+    }
+
+    function loadStudentDashboard() {
+      const users = JSON.parse(localStorage.getItem('roboUsers'));
+      currentUser.balance = users[currentUser.id].balance;
+
+      document.getElementById('studentName').textContent = currentUser.name;
+      document.getElementById('studentIdDisplay').textContent = currentUser.id;
+      document.getElementById('studentRank').textContent = currentUser.rank;
+      document.getElementById('studentBalance').textContent = currentUser.balance;
+      
+      const savedAvatar = localStorage.getItem(`avatar_${currentUser.id}`);
+      if(savedAvatar) document.getElementById('studentAvatar').src = savedAvatar;
+      
+      const shopDiv = document.getElementById('shopItems');
+      shopDiv.innerHTML = toys.map(t => `
+        <div class="bg-[#0f172a]/80 p-5 rounded-2xl border border-white/5 text-center hover:border-yellow-400/50 transition-all">
+          <div class="text-5xl mb-3">${t.img}</div>
+          <h4 class="font-bold text-white mb-2">${t.name}</h4>
+          <p class="text-yellow-400 font-black mb-4">${t.price} RC</p>
+          <button onclick="openBuyModal('${t.id}')" class="w-full bg-white/10 hover:bg-yellow-400 hover:text-black text-white py-2 rounded-xl text-sm font-bold transition-all">Сатып алу</button>
+        </div>
+      `).join('');
+      
+      showSection('student-section');
+    }
+
+    function openBuyModal(toyId) {
+      selectedToy = toys.find(t => t.id === toyId);
+      if (currentUser.balance < selectedToy.price) { showToast("Монетаңыз жетпейді!", "error"); return; }
+      document.getElementById('buyItemDetails').innerHTML = `<p>Ойыншық: <b>${selectedToy.name}</b></p><p>Бағасы: <b class="text-yellow-400">${selectedToy.price} RC</b></p>`;
+      document.getElementById('buyModal').classList.remove('hidden');
+    }
+
+    function closeModal() { document.getElementById('buyModal').classList.add('hidden'); selectedToy = null; }
+
+    function confirmPurchase() {
+      const phone = document.getElementById('parentPhone').value.trim();
+      if (!phone) { showToast("Нөмірді жазыңыз!", "error"); return; }
+
+      let users = JSON.parse(localStorage.getItem('roboUsers'));
+      users[currentUser.id].balance -= selectedToy.price;
+      localStorage.setItem('roboUsers', JSON.stringify(users));
+
+      const text = `Сәлеметсіз бе! 🤖 ROBO COIN:\n👨‍🎓 Оқушы: ${currentUser.name} (ID: ${currentUser.id})\n📱 Нөмір: ${phone}\n🎁 Тауар: ${selectedToy.name}\n🔢 Серия: ${selectedToy.id}\n💰 Төленді: ${selectedToy.price} RC.`;
+      
+      showToast("Сатып алынды! WhatsApp-қа өтуде...", "success");
+      closeModal(); loadStudentDashboard();
+      setTimeout(() => window.open(`https://api.whatsapp.com/send?phone=${adminWhatsAppNumber}&text=${encodeURIComponent(text)}`, '_blank'), 1500);
+    }
+
+    function uploadAvatar(event, imgId) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.getElementById(imgId).src = e.target.result;
+          try {
+            localStorage.setItem(`avatar_${currentUser.id}`, e.target.result);
+            showToast("Сурет сәтті сақталды!", "success");
+          } catch(err) { showToast("Сурет өлшемі тым үлкен!", "error"); }
+        }
+        reader.readAsDataURL(file);
+      }
+    }
+  </script>
+</body>
+</html> 

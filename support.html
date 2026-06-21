@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+  <title>ROBO LEGO | Қолдау қызметі</title>
+  <link rel="icon" href="image\icon.png" type="image/png">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght=400;600;700;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:'Inter',sans-serif;
+    }
+
+    body{
+      background:#020617;
+      color:white;
+      overflow-x:hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .glass{
+      background:rgba(255,255,255,0.05);
+      backdrop-filter:blur(16px);
+      border:1px solid rgba(255,255,255,0.1);
+    }
+
+    .gradient-text{
+      background:linear-gradient(to right,#facc15,#38bdf8);
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+  </style>
+</head>
+<body class="relative">
+
+  <!-- Фондағы жарықтар -->
+  <div class="fixed w-[500px] h-[500px] bg-blue-600 blur-[200px] opacity-20 rounded-full top-[-100px] left-[-100px] pointer-events-none"></div>
+  <div class="fixed w-[500px] h-[500px] bg-yellow-400 blur-[200px] opacity-10 rounded-full bottom-[-100px] right-[-100px] pointer-events-none"></div>
+
+  <!-- Жоғарғы мәзір -->
+  <nav class="w-full z-50 px-6 py-6 relative">
+    <div class="max-w-4xl mx-auto flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 bg-yellow-400 rounded-xl flex items-center justify-center text-black text-xl shadow-lg shadow-yellow-400/20">🤖</div>
+        <h1 class="text-2xl font-black gradient-text tracking-wide">ROBO LEGO SUPPORT</h1>
+      </div>
+      
+      <!-- Негізгі сайтқа қайту -->
+      <a href="index.html" class="flex items-center gap-2 bg-white/5 border border-white/10 hover:bg-white/10 px-5 py-2.5 rounded-xl text-sm font-semibold duration-300">
+        <span>⬅</span> Артқа қайту
+      </a>
+    </div>
+  </nav>
+
+  <!-- Негізгі форма бөлімі -->
+  <main class="flex-grow flex items-center justify-center px-6 py-10 relative z-10">
+    <div class="w-full max-w-3xl">
+      
+      <div class="glass rounded-[35px] p-8 md:p-12 shadow-2xl shadow-black/50">
+        
+        <div class="text-center mb-10">
+          <div class="w-20 h-20 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-2xl flex items-center justify-center text-white text-4xl mx-auto mb-6 shadow-xl shadow-blue-500/20">📩</div>
+          <h2 class="text-3xl md:text-4xl font-black text-white mb-3">Шағымдар мен Ұсыныстар</h2>
+          <p class="text-slate-400 text-sm md:text-base max-w-xl mx-auto">Платформаның жұмысына қатысты ақаулар тапсаңыз немесе жаңа идеяларыңыз болса, осында қалдырыңыз. Біздің команда оны міндетті түрде қарайды.</p>
+        </div>
+
+        <!-- НАЗАР АУДАР: ОСЫ ЖЕРДЕГІ EMAIL-ДІ ӨЗГЕРТ -->
+        <form action="https://formsubmit.co/robolegoeducation@gmail.com" method="POST" enctype="multipart/form-data" class="space-y-6">
+          
+          <!-- Тікелей поштаға әдемі болып баруы үшін жасырын баптаулар -->
+          <input type="hidden" name="_subject" value="ROBO LEGO: Сайттан жаңа хат түсті!">
+          <input type="hidden" name="_captcha" value="false"> <!-- Капчаны өшіру -->
+          <input type="hidden" name="_template" value="table"> <!-- Хат кестенің ішінде әдемі келуі үшін -->
+
+          <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-sm font-semibold text-slate-300 mb-2">Аты-жөніңіз</label>
+                <input type="text" name="Аты-жөні" required placeholder="Толық аты-жөні" class="w-full bg-[#0f172a]/80 border border-slate-700/50 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-yellow-400 focus:bg-[#0f172a] transition-all duration-300">
+              </div>
+              <div>
+                <label class="block text-sm font-semibold text-slate-300 mb-2">Жеке ID нөміріңіз</label>
+                <input type="text" name="Жеке_ID" required placeholder="Мысалы: ID-101" class="w-full bg-[#0f172a]/80 border border-slate-700/50 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-yellow-400 focus:bg-[#0f172a] transition-all duration-300">
+              </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6">
+            <div>
+              <label class="block text-sm font-semibold text-slate-300 mb-2">Электронды поштаңыз (Email)</label>
+              <input type="email" name="Жіберуші_поштасы" required placeholder="Сізбен байланысу үшін" class="w-full bg-[#0f172a]/80 border border-slate-700/50 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-yellow-400 focus:bg-[#0f172a] transition-all duration-300">
+            </div>
+
+            <div>
+              <label class="block text-sm font-semibold text-slate-300 mb-2">Өтініш мақсаты</label>
+              <select name="Мақсаты" required class="w-full bg-[#0f172a]/80 border border-slate-700/50 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-yellow-400 transition-all duration-300 appearance-none cursor-pointer">
+                <option value="" disabled selected>Тізімнен таңдаңыз...</option>
+                <option value="Сайт ақаулары">Сайт ақаулары (Қателіктер)</option>
+                <option value="Жаңа ұсыныс">Сайтты дамыту бойынша ұсыныс</option>
+                <option value="Менеджерлікке өтініш">Менеджерлікке өтініш</option>
+                <option value="Басқа">Басқа сұрақтар</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-slate-300 mb-2">Дәлел немесе скриншот (міндетті емес)</label>
+            <div class="w-full bg-[#0f172a]/80 border border-dashed border-slate-600 rounded-2xl px-5 py-4 hover:border-yellow-400 transition-all duration-300">
+              <input type="file" name="Скриншот" accept="image/*" class="w-full text-slate-400 file:mr-4 file:py-2.5 file:px-6 file:rounded-xl file:border-0 file:text-sm file:font-bold file:bg-slate-800 file:text-white hover:file:bg-slate-700 cursor-pointer duration-300">
+            </div>
+          </div>
+
+          <div>
+            <label class="block text-sm font-semibold text-slate-300 mb-2">Толық сипаттама</label>
+            <textarea name="Хабарлама" rows="5" required placeholder="Мәселені немесе ұсынысты барынша толық жазыңыз..." class="w-full bg-[#0f172a]/80 border border-slate-700/50 rounded-2xl px-5 py-4 text-white focus:outline-none focus:border-yellow-400 focus:bg-[#0f172a] transition-all duration-300 resize-none"></textarea>
+          </div>
+
+          <!-- Ескерту -->
+          <div class="bg-red-500/10 border border-red-500/20 p-5 rounded-2xl flex gap-4 items-start">
+            <span class="text-xl">⚠️</span>
+            <p class="text-red-400 text-sm leading-relaxed mt-0.5">
+              Жазбаңыз мәдениетті түрде болуы шарт. Егер өтініште балағат сөздер немесе қалыпты жағдайдан ауытқу байқалса, ол қаралмайды және аккаунтыңыз бұғатталуы мүмкін.
+            </p>
+          </div>
+
+          <button type="submit" class="w-full bg-yellow-400 text-black py-4 rounded-2xl font-black text-lg hover:bg-yellow-300 hover:scale-[1.01] active:scale-[0.98] transition-all duration-300 shadow-lg shadow-yellow-400/20 mt-2">
+            Өтінішті жіберу
+          </button>
+        </form>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Футер -->
+  <footer class="w-full border-t border-white/5 py-8 text-center relative z-10 mt-auto">
+    <p class="text-slate-500 text-sm">© 2026 WeDoLab. Барлық құқықтар қорғалған.</p>
+  </footer>
+
+</body>
+</html>
